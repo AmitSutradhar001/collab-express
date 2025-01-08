@@ -1,8 +1,8 @@
 .exp-outer {
-  @apply md:pl-20;
+  @apply md:pl-20 w-full;
 }
 .exp-out {
-  @apply flex gap-8;
+  @apply flex gap-8 w-full;
 }
 .exp-inner {
   @apply w-full my-8;
@@ -26,7 +26,7 @@
   @apply pl-10;
 }
 .exp-com-div {
-  @apply pr-10 hidden lg:block;
+  @apply pr-10 hidden lg:block w-3/12;
 }
 .exp-admin-div {
   @apply my-8 w-3/4;

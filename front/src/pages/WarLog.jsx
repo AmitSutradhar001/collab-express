@@ -10,7 +10,7 @@ const WarLog = () => {
   useEffect(() => {
     async function fetchClanData() {
       const clanResponse = await api.get(
-        "/clan/by-id/675fe6e8556a98b2654d0151",
+        "/clan/by-id/677b8862ecc807cf9afa72d5",
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -25,7 +25,7 @@ const WarLog = () => {
     }
     async function fetchWLData() {
       const clanResponse = await api.get(
-        "/warlog/all-by-clan/675fe6e8556a98b2654d0151",
+        "/warlog/all-by-clan/677b8862ecc807cf9afa72d5",
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -36,7 +36,7 @@ const WarLog = () => {
       // console.log(clanResponse);
 
       setClanWarLogData(clanResponse.data.warLogs);
-      console.log(clanResponse.data.warLogs);
+      console.log(clanResponse.data);
     }
     fetchClanData();
     fetchWLData();

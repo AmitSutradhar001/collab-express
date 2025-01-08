@@ -2,13 +2,15 @@ import ProgressBar from "../components/clan/ProgressBar";
 import { useApi } from "../context/ApiContext.jsx";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading.jsx";
+import { useParams } from "react-router-dom";
 const Clan = () => {
+  const {id} = useParams()
   const [clanData, setClanData] = useState(null);
   const api = useApi();
   useEffect(() => {
     async function fetchData() {
       const clanResponse = await api.get(
-        "/clan/by-id/675fe6e8556a98b2654d0151",
+        `/clan/by-id/${id}`,
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -110,7 +112,7 @@ const Clan = () => {
               </div>
               <div className="flex justify-between items-center pb-2 pt-1 border-b-[1px] border-black">
                 <p>Total Members</p>
-                <p>{clanData?.members.lengt}</p>
+                <p>{clanData?.members.length}</p>
               </div>
               <div className="flex justify-between items-center pb-2 pt-1 border-b-[1px] border-black">
                 <p>War Wins</p>

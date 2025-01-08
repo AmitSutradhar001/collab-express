@@ -66,8 +66,8 @@ function App() {
                   path="ProjectAdminRoute"
                   element={<ProjectAdminRoute />}
                 />
-                <Route path="clanlist" element={<ClanList />} />
-                <Route path="clans" element={<Clan />} />
+                <Route path="clan/:id" element={<Clan />} />
+                <Route path="clan-list" element={<ClanList />} />
                 <Route path="warlog" element={<WarLog />} />
                 <Route path="fundscreen" element={<FundScreen />} />
                 <Route path="leaguechallenges" element={<LeagueChallenges />} />

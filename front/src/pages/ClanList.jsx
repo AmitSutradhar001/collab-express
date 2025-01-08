@@ -3,27 +3,42 @@ import FilterScreen from "../components/clan/FilterScreen";
 import { fetchClanData } from "../clanFirebase.js";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../components/Loading.jsx";
+import { useApi } from "../context/ApiContext.jsx";
 const ClanList = () => {
   const [popup, setPopup] = useState(false);
+  const [clanData, setClanData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const api = useApi();
   const handlePopup = () => {
     setPopup(!popup);
   };
+  const handleSubmit = async (e) => {
 
-  const [clanData, setClanData] = useState(null);
-  const hasWrittenClanData = useRef(false);
+  };
+
   useEffect(() => {
-    if (!hasWrittenClanData.current) {
-      // writeClanData("clan",);
-      hasWrittenClanData.current = true;
-    }
     async function fetchData() {
-      const data = await fetchClanData("clans");
-      setClanData(data);
+      try {
+        setLoading(true);
+        const response = await api.get(
+          "/clan/all",
+          {
+            headers: {
+              "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+            },
+            withCredentials: true, // Required to send and receive cookies
+          }
+        );
+        if(response.status === 200){
+          setClanData(response.data.data)
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchData();
   }, []);
   if (!clanData) return <Loading />;
-  console.log(clanData);
   return (
     <>
       <div className="flex justify-center items-start w-full">
@@ -54,7 +69,7 @@ const ClanList = () => {
             <input
               type="text"
               placeholder="Search Clans"
-              className="text-start"
+              className="text-start outline-none"
             />
           </div>
           <div className="flex justify-start items-center gap-3">
@@ -82,13 +97,7 @@ const ClanList = () => {
         <>
           <div className="flex w-full justify-center items-start">
             <div className="flex mt-8 gap-4 mb-10 flex-col justify-center items-center w-8/12">
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
-              <GroupCard clanData={clanData} />
+            {clanData?.map((item)=><GroupCard key={item?._id} clanData={item} />)}
             </div>
           </div>
         </>

@@ -106,7 +106,7 @@ const NavbarMobile = () => {
         >
           Projects
         </NavLink>
-        <NavLink onClick={toggleMenu} to={"/clans"} className="nm-link">
+        <NavLink onClick={toggleMenu} to={"/clan-list"} className="nm-link">
           Clans
         </NavLink>
       </div>

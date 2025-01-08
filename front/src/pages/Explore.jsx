@@ -13,19 +13,19 @@ const Explore = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get(import.meta.env.VITE_SIGNUP_ENDPOINT, {
+        const response = await api.get('/user/get-all-users', {
           headers: {
-            "Content-Type": import.meta.env.VITE_LOGIN_HEADERS,
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
           },
         });
-        let fetchedUsers = response.data;
-
-        // Filter out users who are is_contributor and is_admin
-        let contributors = fetchedUsers
-          .filter((user) => user.is_contributor)
+      console.log(response);
+      
+        if(response.status===200){
+          let contributors = response.data.users
+          .filter((user) => !user.isAdmin
+        )
           .reverse();
-        let admins = fetchedUsers.filter((user) => user.is_admin).reverse();
-
+        let admins = response.data.users.filter((user) => user.isAdmin).reverse();       
         // Further filter the last 2 contributors and admins
         const lastTwoContributors = contributors.slice(0, 2); // Taking first two after reversing
         const lastTwoAdmins = admins.slice(0, 2); // Taking first two after reversing
@@ -33,6 +33,8 @@ const Explore = () => {
         // Combine the filtered users if you want to use both
         setUsers({ contributors: lastTwoContributors, admins: lastTwoAdmins });
 
+        }
+    
         setLoading(false); // Set loading to false when data is fetched
       } catch (err) {
         toast.error(err.message, {
@@ -55,8 +57,6 @@ const Explore = () => {
   if (loading) {
     return <Loading />;
   }
-  console.log(users.contributors);
-
   return (
     <div className="exp-outer ">
       <ToastContainer style={{ top: "100px" }} />
@@ -77,7 +77,7 @@ const Explore = () => {
         </div>
       </div>
       <div className="exp-out">
-        <div>
+        <div className="w-9/12">
           <h2 className="exp-con-h2">Recent Contributions</h2>
           <div className="exp-con-div">
             {users && users ? (

@@ -10,7 +10,7 @@ const userRouter = Router();
 
 userRouter.put("/update-user", verifyToken, updateUser);
 userRouter.delete("/delete-user", verifyToken, deleteUser);
-userRouter.get("/get-all-users", verifyToken, getUsers);
+userRouter.get("/get-all-users", getUsers);
 userRouter.get("/get-user-by-userid/:userId", getTheUser);
 
 export default userRouter;

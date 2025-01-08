@@ -57,7 +57,7 @@ const Navbar = () => {
               Projects
             </NavLink>
             <NavLink
-              to={"/clans"}
+              to={"/clan-list"}
               className={({ isActive }) =>
                 isActive ? "nv-active" : "nv-inactive"
               }
