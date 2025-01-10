@@ -43,6 +43,7 @@ import UserRoute from "./components/UserRoute";
 import ProjectRoute from "./components/ProjectRoute";
 import ProjectAdminRoute from "./components/ProjectAdminRoute";
 import ContributorsRoute from "./components/ContributorsRoute";
+import Discord from './components/clan/Discord.jsx'
 function App() {
   return (
     <Provider store={store}>
@@ -67,6 +68,7 @@ function App() {
                   element={<ProjectAdminRoute />}
                 />
                 <Route path="clan/:id" element={<Clan />} />
+                <Route path="discord" element={<Discord />} />
                 <Route path="clan-list" element={<ClanList />} />
                 <Route path="warlog" element={<WarLog />} />
                 <Route path="fundscreen" element={<FundScreen />} />

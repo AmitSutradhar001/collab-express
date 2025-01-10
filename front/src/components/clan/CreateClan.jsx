@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import Loading from "../components/Loading.jsx";
 import { useApi } from '../../context/ApiContext.jsx'
 import { useSelector,useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,15 +13,11 @@ const CreateClan = () => {
   const clanLeader = user.fullname
   const handleSubmit = async (e) => {
     e.preventDefault()
-      // Create a FormData object from the form
   const formData = new FormData(e.target);
-
-  // Extract data one by one
   const name = formData.get("name");
   const location = formData.get("location");
 
   const clanType = formData.get("clanType");
-//   const solvedIssues = parseInt(formData.get("solvedIssues") || 52678, 10);
   const requiredSolvedIssues = parseInt(
     formData.get("requiredSolvedIssues") || 0,
     10
