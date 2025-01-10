@@ -16,7 +16,7 @@ const clanModel = new Schema(
     },
     clanLevel: {
       type: String,
-      required: true,
+      default: 1
     },
     members: {
       type: Array,
@@ -45,7 +45,7 @@ const clanModel = new Schema(
     },
     solvedIssues: {
       type: Number,
-      default: 52678,
+      default: 0,
     },
     requiredSolvedIssues: {
       type: Number,

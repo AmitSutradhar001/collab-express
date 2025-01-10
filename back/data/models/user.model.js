@@ -26,6 +26,12 @@ const userModel = new Schema(
       type: Boolean,
       required: true,
     },
+    clanId: {
+      type: Schema.Types.ObjectId,
+      ref: "Clan",
+      default:null
+      
+    },
   },
   { timestamps: true }
 );

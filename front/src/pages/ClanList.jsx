@@ -4,8 +4,10 @@ import { fetchClanData } from "../clanFirebase.js";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../components/Loading.jsx";
 import { useApi } from "../context/ApiContext.jsx";
+import CreateClan from "../components/clan/CreateClan.jsx" 
 const ClanList = () => {
   const [popup, setPopup] = useState(false);
+  const [clanPopup, setClanPopup] = useState(false);
   const [clanData, setClanData] = useState(null);
   const [loading, setLoading] = useState(false);
   const api = useApi();
@@ -14,6 +16,9 @@ const ClanList = () => {
   };
   const handleSubmit = async (e) => {
 
+  };
+  const handleClanPopup = () => {
+    setClanPopup(!clanPopup);
   };
 
   useEffect(() => {
@@ -43,6 +48,13 @@ const ClanList = () => {
     <>
       <div className="flex justify-center items-start w-full">
         <div className="w-10/12  flex-wrap flex gap-3 justify-center items-center mt-8">
+        <button
+        disabled={popup}
+              onClick={handleClanPopup}
+              className="px-5 w-32 py-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-md text-white font-semibold"
+            >
+              {clanPopup ? "Cancle" : "New Clan"}
+            </button>
           <div className="flex gap-4 justify-start items-center py-1 px-2 w-6/12 border-[1px] border-gray-400 rounded-sm min-w-52">
             <svg
               width="25"
@@ -74,6 +86,7 @@ const ClanList = () => {
           </div>
           <div className="flex justify-start items-center gap-3">
             <button
+             disabled={clanPopup}
               className={
                 popup
                   ? " px-5 w-24 py-1 font-semibold bg-gray-300 rounded-md text-white"
@@ -84,6 +97,7 @@ const ClanList = () => {
             </button>
             <button
               onClick={handlePopup}
+              disabled={clanPopup}
               className="px-5 w-32 py-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-md text-white font-semibold"
             >
               {popup ? "Hide Filter" : "Filter"}
@@ -92,16 +106,19 @@ const ClanList = () => {
         </div>
       </div>
       {popup ? (
-        <FilterScreen />
-      ) : (
-        <>
-          <div className="flex w-full justify-center items-start">
-            <div className="flex mt-8 gap-4 mb-10 flex-col justify-center items-center w-8/12">
-            {clanData?.map((item)=><GroupCard key={item?._id} clanData={item} />)}
-            </div>
-          </div>
-        </>
-      )}
+  <FilterScreen />
+) : clanPopup ? (
+  <CreateClan />
+) : (
+  <div className="flex w-full justify-center items-start">
+    <div className="flex mt-8 gap-4 mb-10 flex-col justify-center items-center w-8/12">
+      {clanData?.map((item) => (
+        <GroupCard key={item?._id} clanData={item} />
+      ))}
+    </div>
+  </div>
+)}
+
     </>
   );
 };
