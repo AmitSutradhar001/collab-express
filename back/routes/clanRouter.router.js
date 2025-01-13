@@ -9,7 +9,7 @@ import {
 import { verifyToken } from "../middleware/verifyUser.js";
 const clanRouter = Router();
 
-clanRouter.post("/create", verifyToken, createClan);
+clanRouter.post("/create",verifyToken, createClan);
 clanRouter.get("/all", getAllClans);
 clanRouter.get("/by-id/:id", getClanById);
 clanRouter.put("/update/:id", updateClan);

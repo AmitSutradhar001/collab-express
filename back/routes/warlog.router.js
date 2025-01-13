@@ -9,10 +9,10 @@ import {
 import { verifyToken } from "../middleware/verifyUser.js";
 const warlogRouter = Router();
 
-warlogRouter.post("/create", verifyToken, createWarLog);
-warlogRouter.delete("/delete/:id", verifyToken, deleteWarLog);
+warlogRouter.post("/create", createWarLog);
+warlogRouter.delete("/delete/:id", deleteWarLog);
 warlogRouter.get("/all-by-clan/:clanId", getWarLogsByClan);
-warlogRouter.get("/by-id/:id", verifyToken, getWarLogById);
-warlogRouter.put("/update/:id", verifyToken, updateWarLog);
+warlogRouter.get("/by-id/:id", getWarLogById);
+warlogRouter.put("/update/:id", updateWarLog);
 
 export default warlogRouter;
