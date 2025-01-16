@@ -113,7 +113,7 @@ const Discord = () => {
             </svg>
             </div>
           </div>
-          <div className="flex w-full items-center h-full ">
+          <div className="flex flex-row w-full items-center h-full ">
             <div className="w-2/12 pt-3 flex flex-col h-full justify-between items-center border-r-[1px] border-purple-500">
             <div className="flex flex-col w-full gap-5">
               <div className="group ml-8 flex justify-between items-center p-2 rounded-md text-white bg-transparent  hover:bg-white hover:text-black transition-colors duration-300">
@@ -156,6 +156,57 @@ const Discord = () => {
                 <path d="M2.08301 13.9168V12.0835C2.08301 11.0002 2.96842 10.1043 4.06217 10.1043C5.94759 10.1043 6.71842 8.77099 5.77051 7.13557C5.22884 6.19807 5.55176 4.97932 6.49967 4.43766L8.30176 3.40641C9.12467 2.91682 10.1872 3.20849 10.6768 4.03141L10.7913 4.22932C11.7288 5.86474 13.2705 5.86474 14.2184 4.22932L14.333 4.03141C14.8226 3.20849 15.8851 2.91682 16.708 3.40641L18.5101 4.43766C19.458 4.97932 19.7809 6.19807 19.2393 7.13557C18.2913 8.77099 19.0622 10.1043 20.9476 10.1043C22.0309 10.1043 22.9268 10.9897 22.9268 12.0835V13.9168C22.9268 15.0002 22.0413 15.896 20.9476 15.896C19.0622 15.896 18.2913 17.2293 19.2393 18.8647C19.7809 19.8127 19.458 21.021 18.5101 21.5627L16.708 22.5939C15.8851 23.0835 14.8226 22.7918 14.333 21.9689L14.2184 21.771C13.2809 20.1356 11.7393 20.1356 10.7913 21.771L10.6768 21.9689C10.1872 22.7918 9.12467 23.0835 8.30176 22.5939L6.49967 21.5627C5.55176 21.021 5.22884 19.8022 5.77051 18.8647C6.71842 17.2293 5.94759 15.896 4.06217 15.896C2.96842 15.896 2.08301 15.0002 2.08301 13.9168Z" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
 
+              </div>
+            </div>
+            </div>
+            {/* chat part */}
+            <div className="w-7/12 h-full flex bg-white">amit</div>
+            {/* right side */}
+            <div className="w-3/12 pt-3 flex flex-col h-full justify-start border-l-[1px] border-purple-500">
+            <div className="flex flex-col justify-start gap-5 w-full h-4/5 px-5">
+              <p className="text-white font-bold text-2xl text-start">Members</p>
+              <div className="bg-white w-full p-2 rounded-md flex justify-center items-center">
+                <input type="text" className="outline-none w-full placeholder:text-black" placeholder="Search" />
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.58366 17.4998C13.9559 17.4998 17.5003 13.9554 17.5003 9.58317C17.5003 5.21092 13.9559 1.6665 9.58366 1.6665C5.2114 1.6665 1.66699 5.21092 1.66699 9.58317C1.66699 13.9554 5.2114 17.4998 9.58366 17.4998Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M18.3337 18.3332L16.667 16.6665" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+
+              </div>
+              {/* list */}
+              <div className="w-full h-full max-h-96 overflow-y-auto bg-white rounded-lg p-3 flex flex-col gap-4">
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
+                <div className="flex justify-start items-center gap-2">
+                  <img src="./clan/1.png" className="w-10 rounded-full"/>
+                  <p className="text-gray-800 font-medium">Amit Singh</p>
+                </div>
               </div>
             </div>
             </div>
