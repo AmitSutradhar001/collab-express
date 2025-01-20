@@ -1,7 +1,22 @@
 const Discord = () => {
+  const messages = [
+    { id: 1, sender: 'Amit Singh', time: '6:30 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 2, sender: 'Amit Singh', time: '6:34 pm', text: 'Aliquam pulvinar sed risus massa ornare nisi id varius viverra. Maecenas id quis fusce id magna ac interdum ornare.', isSender: false },
+    { id: 3, sender: 'Vedant236', time: '7:30 pm', text: 'Egestas pellentesque mauris', isSender: true },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+    { id: 4, sender: 'Amit Singh', time: '8:34 pm', text: 'Egestas pellentesque mauris', isSender: false },
+  ];
   return (
     <>
-      <div className="mt-5 flex w-full">
+      <div className="mt-5 flex w-full h-screen">
+        {/* images side bar */}
         <div className="w-20 p-2 flex flex-col justify-start items-center gap-5">
           <button className="group focus:rounded-md rounded-full w-12">
             <img
@@ -92,8 +107,10 @@ const Discord = () => {
             </defs>
           </svg>
         </div>
+        {/* inner color part  */}
         <div className="flex flex-col border-[1px] border-purple-500 bg-gradient-to-tl from-purple-400 via-blue-300 to-purple-400 w-full rounded-t-lg h-screen">
-          <div className="flex w-full items-center border-b-[1px] border-purple-500 ">
+          {/* nav bar inside */}
+          <div className="flex w-full h-[8%] items-center border-b-[1px] border-purple-500 ">
             <div className="w-2/12 px-5 py-3 flex justify-between items-center border-r-[1px] border-purple-500">
             <p className="text-white font-medium">Space City</p>
             <svg width="20" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,9 +130,11 @@ const Discord = () => {
             </svg>
             </div>
           </div>
-          <div className="flex flex-row w-full items-center h-full ">
-            <div className="w-2/12 pt-3 flex flex-col h-full justify-between items-center border-r-[1px] border-purple-500">
-            <div className="flex flex-col w-full gap-5">
+          {/* main part  */}
+          <div className="flex flex-row w-full items-center h-[92%] ">
+          {/* left side bar */}
+            <div className="w-2/12 pt-3 flex flex-col h-full justify-start items-center border-r-[1px] border-purple-500">
+            <div className="flex flex-col h-full   w-full gap-5 justify-start items-start">
               <div className="group ml-8 flex justify-between items-center p-2 rounded-md text-white bg-transparent  hover:bg-white hover:text-black transition-colors duration-300">
                 <p className="">#General</p>
                 <div className="flex gap-2 items-center text-white group-hover:text-black duration-300">
@@ -137,7 +156,7 @@ const Discord = () => {
                 <p className="">#Gaming</p>
               </div>
             </div>
-            <div className="w-full bg-gray-700 p-2 flex justify-between items-center">
+            <div className="w-full  bg-gray-700 p-2 flex justify-between items-center">
               <div className="flex justify-center items-center gap-2">
                 <img src="./clan/4.png" className="rounded-full w-8"/>
                 <div className="flex flex-col text-white">
@@ -160,7 +179,53 @@ const Discord = () => {
             </div>
             </div>
             {/* chat part */}
-            <div className="w-7/12 h-full flex bg-white">amit</div>
+
+            <div className="w-7/12 h-full flex flex-col bg-white p-4">
+            <div className="h-[90%] overflow-y-auto flex-grow">
+            <div className=" w-full flex flex-col flex-grow overflow-y-auto">
+            {messages.map((item, index)=>{
+              return <>{item.isSender? <>
+                <div key={item.id} className="flex w-full justify-end items-start gap-2">
+                <div className="fllex flex-col w-1/2 justify-start items-start">
+                <div className="flex gap-2 justify-end items-end">
+                  <p>{item.sender}</p> 
+                  <p>{item.time}</p>
+                </div>
+                  <p className="w-full break-words p-2 bg-gray-100 rounded-lg">{item.text}</p>
+                </div>
+                <img src="./clan/1.png" className="w-10 rounded-full"/>
+              </div></>: <>
+              <div key={index} className="flex w-full justify-start items-start gap-2">
+                <img src="./clan/1.png" className="w-10 rounded-full"/>
+                <div className="fllex flex-col w-1/2 justify-start items-start">
+                <div className="flex gap-2 justify-start items-center">
+                  <p>{item.sender}</p> 
+                  <p>{item.time}</p>
+                </div>
+                  <p className="w-full break-words p-2 bg-gray-100 rounded-lg">{item.text}</p>
+                </div>
+              </div></>}</>
+            })}
+            </div>
+            </div>
+            <div className="h-[10%] flex justify-center items-center w-full">
+            <div className=" bg-pink-200 w-full rounded-md flex px-4 py-2 justify-around items-center gap-3">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0ZM15 11H11V15H9V11H5V9H9V5H11V9H15V11Z" fill="#9A9A9A"/>
+            </svg>
+            <input type="text" className="bg-pink-200 w-full outline-none placeholder:text-gray-600" placeholder="Message #General" />
+            <svg width="21" height="27" viewBox="0 0 21 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.75 5.375C14.75 2.95875 12.7912 1 10.375 1C7.95875 1 6 2.95875 6 5.375V13.5C6 15.9162 7.95875 17.875 10.375 17.875C12.7912 17.875 14.75 15.9162 14.75 13.5V5.375Z" stroke="#111111" strokeWidth="2" strokeLinejoin="round"/>
+            <path d="M1 12.875C1 18.0525 5.1975 22.25 10.375 22.25M10.375 22.25C15.5525 22.25 19.75 18.0525 19.75 12.875M10.375 22.25V26" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <svg width="26" height="23" viewBox="0 0 26 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.0047 1.72497L3.4465 11.4446C2.36024 12.5493 1.75 14.0475 1.75 15.6096C1.75 17.1718 2.36024 18.6699 3.4465 19.7746C3.98445 20.3216 4.62309 20.7556 5.32596 21.0516C6.02883 21.3476 6.78217 21.5 7.54295 21.5C8.30373 21.5 9.05706 21.3476 9.75994 21.0516C10.4628 20.7556 11.1014 20.3216 11.6394 19.7746L23.0186 8.20471C23.3773 7.84003 23.6618 7.40708 23.856 6.93058C24.0501 6.45408 24.15 5.94336 24.15 5.42758C24.15 4.91181 24.0501 4.40109 23.856 3.92459C23.6618 3.44809 23.3773 3.01514 23.0186 2.65046C22.6599 2.28572 22.2341 1.9964 21.7655 1.799C21.2969 1.6016 20.7946 1.5 20.2874 1.5C19.7802 1.5 19.2779 1.6016 18.8093 1.799C18.3406 1.9964 17.9149 2.28572 17.5562 2.65046L6.17768 14.221C5.99833 14.4034 5.85606 14.6199 5.75899 14.8581C5.66193 15.0964 5.61197 15.3517 5.61197 15.6096C5.61197 15.8675 5.66193 16.1229 5.75899 16.3611C5.85606 16.5994 5.99833 16.8158 6.17768 16.9982C6.53981 17.3663 7.0309 17.5731 7.54295 17.5731C8.055 17.5731 8.54609 17.3663 8.90822 16.9982L18.467 7.27856" stroke="#111111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+
+            </div>
+            </div>
+           
+            </div>
             {/* right side */}
             <div className="w-3/12 pt-3 flex flex-col h-full justify-start border-l-[1px] border-purple-500">
             <div className="flex flex-col justify-start gap-5 w-full h-4/5 px-5">
@@ -173,8 +238,8 @@ const Discord = () => {
                 </svg>
 
               </div>
-              {/* list */}
-              <div className="w-full h-full max-h-96 overflow-y-auto bg-white rounded-lg p-3 flex flex-col gap-4">
+              {/* inside list */}
+              <div className="w-full h- overflow-y-auto bg-white rounded-lg p-3 flex flex-col gap-4">
                 <div className="flex justify-start items-center gap-2">
                   <img src="./clan/1.png" className="w-10 rounded-full"/>
                   <p className="text-gray-800 font-medium">Amit Singh</p>
