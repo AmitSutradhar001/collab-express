@@ -28,7 +28,7 @@ const userModel = new Schema(
     },
     clanId: {
       type: Schema.Types.ObjectId,
-      ref: "Clan",
+      ref: "clan",
       default:null
       
     },

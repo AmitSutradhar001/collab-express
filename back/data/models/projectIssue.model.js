@@ -5,7 +5,7 @@ const projectIssueModel = new Schema(
     projectId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref:'Project'
+      ref:'project'
     },
     title: {
       type: String,

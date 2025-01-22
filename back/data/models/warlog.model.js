@@ -5,7 +5,7 @@ const warlogModel = new Schema(
     clanId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "Clan",
+      ref: "clan",
     },
     warDate: { type: Date, required: true },
     opponentClan: { type: String, required: true },

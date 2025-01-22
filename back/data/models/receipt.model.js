@@ -1,23 +1,26 @@
 import { Schema } from "mongoose";
 
-const appliedModel = new Schema(
+const receiptModel = new Schema(
   {
-    issueId: {
+    userId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "projectIssue",
+      ref: "user",
     },
-    projectId: {
-      type: Schema.Types.ObjectId,
+    pointSpend: {
+      type: Number,
       required: true,
-      ref: "project",
     },
-    content: {
+    itemPerchesed: {
       type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-export default appliedModel;
+export default receiptModel;
