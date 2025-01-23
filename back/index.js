@@ -13,6 +13,7 @@ import projectIssueRouter from "./routes/projectIssue.router.js";
 import clanRouter from "./routes/clanRouter.router.js";
 import warlogRouter from "./routes/warlog.router.js";
 import clanPointsRouter from "./routes/clanPoints.router.js";
+import receiptRouter from "./routes/receipt.router.js";
 // Initialize the app
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/application", appliedRouter);
 app.use("/clan", clanRouter);
 app.use("/warlog", warlogRouter);
 app.use("/clan_points", clanPointsRouter);
+app.use("/receipt", receiptRouter);
 
 // Error handling middleware
 app.use(notFound); // Handle 404 errors

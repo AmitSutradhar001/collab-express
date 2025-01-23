@@ -7,7 +7,7 @@ import appliedModel from "./models/applied.model.js";
 import clanModel from "./models/clan.model.js";
 import warlogModel from "./models/warlog.model.js";
 import clanPointsModel from "./models/clanPoints.model.js";
-import receiptdModel from "./models/receipt.model.js";
+import receiptModel from "./models/receipt.model.js";
 
 const MONGODB_URL = process.env.MONGODB_URL;
 try {
@@ -22,4 +22,4 @@ export const Applied = model("appliedIssue", appliedModel);
 export const Clan = model("clan", clanModel);
 export const WarLog = model("warlog", warlogModel);
 export const ClanPoints = model("clan-points", clanPointsModel);
-export const Receiptd = model("receipt", receiptdModel);
+export const Receipt = model("receipt", receiptModel);
