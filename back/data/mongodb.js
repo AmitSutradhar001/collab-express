@@ -8,6 +8,7 @@ import clanModel from "./models/clan.model.js";
 import warlogModel from "./models/warlog.model.js";
 import clanPointsModel from "./models/clanPoints.model.js";
 import receiptModel from "./models/receipt.model.js";
+import matchSchema from "./models/match.model.js";
 
 const MONGODB_URL = process.env.MONGODB_URL;
 try {
@@ -23,3 +24,5 @@ export const Clan = model("clan", clanModel);
 export const WarLog = model("warlog", warlogModel);
 export const ClanPoints = model("clan-points", clanPointsModel);
 export const Receipt = model("receipt", receiptModel);
+export const Match = model('match', matchSchema);
+
