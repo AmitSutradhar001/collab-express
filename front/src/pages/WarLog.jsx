@@ -3,14 +3,16 @@ import WarStats from "../components/clan/WarStarts";
 import { useEffect, useRef, useState } from "react";
 import { useApi } from "../context/ApiContext.jsx";
 import Loading from "../components/Loading.jsx";
+import { useParams } from "react-router-dom";
 const WarLog = () => {
+  const {clanId} = useParams()
   const [clanWarLogData, setClanWarLogData] = useState(null);
   const [clanData, setClanData] = useState(null);
   const api = useApi();
   useEffect(() => {
     async function fetchClanData() {
       const clanResponse = await api.get(
-        "/clan/by-id/677b8862ecc807cf9afa72d5",
+        `/clan/by-id/${clanId}`,
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -21,11 +23,11 @@ const WarLog = () => {
       // console.log(clanResponse);
 
       setClanData(clanResponse.data.clan);
-      console.log(clanResponse.data.clan);
+      console.log("clan data::->",clanResponse.data.clan);
     }
     async function fetchWLData() {
       const clanResponse = await api.get(
-        "/warlog/all-by-clan/677b8862ecc807cf9afa72d5",
+        `/warlog/all-by-clan/${clanId}`,
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -36,12 +38,12 @@ const WarLog = () => {
       // console.log(clanResponse);
 
       setClanWarLogData(clanResponse.data.warLogs);
-      console.log(clanResponse.data);
+      console.log("clan data@::->",clanResponse.data);
     }
     fetchClanData();
     fetchWLData();
   }, []);
-  if (!clanWarLogData | !clanData) return <Loading />;
+  // if (!clanWarLogData | !clanData) return <Loading />;
 
   return (
     <div className="w-full flex flex-col justify-center items-center">

@@ -1,16 +1,13 @@
 // Import dependencies
-import { Clan } from "../data/mongodb.js";
-import { User } from "../data/mongodb.js";
-import mongoose from "mongoose";
+import { User, ClanPoints, Clan } from "../data/mongodb.js";
 // Create a clan
 
 export const createClan = async (req, res) => {
-  
   try {
     const newClan = new Clan(req.body);
     // Save the new post to the database
     const savedClan = await newClan.save();
-    
+
     if (!savedClan) {
       return next({
         status: 400,
@@ -18,14 +15,24 @@ export const createClan = async (req, res) => {
       });
     }
 
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $set: {
-          clanId: savedClan._id,
-        },
-      }
-    );
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        clanId: savedClan._id,
+      },
+    });
+
+    const points = new ClanPoints({
+      clanName: savedClan.name,
+      points: 0,
+      clanId: savedClan._id,
+    });
+    const savePoints = await points.save();
+    if (!savePoints) {
+      return next({
+        status: 400,
+        message: "Points is not created!.",
+      });
+    }
 
     if (!user) {
       return next({
@@ -38,7 +45,6 @@ export const createClan = async (req, res) => {
     res.status(400).json({ success: false, error: error.message });
   }
 };
-
 
 // Get all clans
 export const getAllClans = async (req, res) => {
