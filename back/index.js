@@ -4,7 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import notFound from "./error/notFound.js";
 import err from "./error/err.js";
-import "dotenv/config";
 import userRouter from "./routes/user.router.js";
 import authRouter from "./routes/auth.router.js";
 import projectRouter from "./routes/project.router.js";
@@ -17,7 +16,6 @@ import receiptRouter from "./routes/receipt.router.js";
 import matchRouter from "./routes/match.router.js";
 // Initialize the app
 const app = express();
-
 // Middleware
 const corsOptions = {
   origin: "http://localhost:5173", // Replace with your frontend URL *process.env.CORS_URL*

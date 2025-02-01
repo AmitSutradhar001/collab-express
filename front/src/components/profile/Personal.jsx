@@ -5,64 +5,100 @@ import MultiInput from "./MultiInput";
 import downArrow from "/downArrow.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { updateContributor } from "../../redux/contributorSlice";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useRef, useState } from "react";
+import { Cloudinary } from "@cloudinary/url-gen";
+import axios from "axios";
+import { useApi } from "../../context/ApiContext";
+
 
 const Personal = () => {
-  const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const filePick = useRef();
-
+  const api = useApi()
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user_id } = useSelector((state) => state.user.user);
+  const cld = new Cloudinary({ cloud: { cloudName: "dzely4n74" } });
 
-  const handleSubmit = (e) => {
+  // Use this sample image or upload your own via the Media Explorer
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const name = formData.get("fullName");
-    const phone_number = formData.get("phone");
+    const fullname = formData.get("fullName");
+    const phNo = formData.get("phone");
     const role = formData.get("role");
     const stack = formData.get("Stack");
     const bio = formData.get("bio");
 
-    if (!name || !phone_number || !bio || !role || !stack) {
+    if (!fullname || !phNo || !bio || !role || !stack) {
       return toast.warn("Fill the form first!");
     }
 
-    dispatch(
-      updateContributor({
-        name,
-        phone_number,
-        role,
-        stack: [stack],
-        bio,
-        user_id,
-      })
-    );
+     try {
+          const loginResponse = await api.put(
+            "/user/update-user",
+            { fullname, phNo, bio, role, stack },
+            {
+              headers: {
+                "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+              },
+              withCredentials: true, // Required to send and receive cookies
+            }
+          );
+          console.log(loginResponse);
+          if (loginResponse.status === 200) {
+            dispatch(login(newData.user));
+    
+            toast.success("Loged In Successfully!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setTimeout(() => {
+              navigate("/profile/personal-details");
+            }, 1000);
+          }
+        } catch (error) {
+          console.log(error);
+    
+          toast.error(error.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } 
 
-    navigate("/profile/work-experience");
+    // navigate("/profile/work-experience");
   };
   // Store image URL in localStorage and update the state
-  const handleImgChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64Image = reader.result; // This is the Base64-encoded image
-        setImageFile(file); // Update state with the file
-        setImageFileUrl(base64Image); // Update state with the Base64 string
-
-        let ProfileImages =
-          JSON.parse(localStorage.getItem("profileImages")) || [];
-        const newProfileImage = {
-          id: user_id, // Replace with actual user ID
-          image: base64Image,
-        };
-        ProfileImages = [...ProfileImages, newProfileImage];
-        localStorage.setItem("profileImages", JSON.stringify(ProfileImages));
-      };
-      reader.readAsDataURL(file); // Convert the file to Base64
+  const handleImgChange = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];    
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "collab"); // Replace with your Cloudinary upload preset
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/dzely4n74/image/upload`,
+        formData
+      );
+      setImageFileUrl(response.data.secure_url);
+      console.log("Uploaded Image URL:", response.data.secure_url);
+    } catch (error) {
+      console.error("Upload Error:", error);
     }
   };
 
@@ -72,6 +108,7 @@ const Personal = () => {
 
   return (
     <div className="ps-outer">
+      <ToastContainer style={{ top: "100px" }}/>
       <Sidebar />
       <div className=" ps-inn">
         <div className="ps-inn-1">
@@ -142,7 +179,7 @@ const Personal = () => {
                   Phone no.
                 </label>
                 <div className="ps-f-in-div">
-                  <input
+                  <input type="number"
                     name="phone"
                     id="phone"
                     placeholder="9827XXXXXX"

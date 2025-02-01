@@ -6,6 +6,7 @@ import "../css/pages/Explore.css";
 import { useApi } from "../context/ApiContext";
 import { toast, ToastContainer } from "react-toastify";
 import Loading from "../components/Loading";
+
 const Explore = () => {
   const [users, setUsers] = useState([]); // State to store the fetched user data
   const [loading, setLoading] = useState(true);
@@ -77,18 +78,25 @@ const Explore = () => {
         </div>
       </div>
       <div className="exp-out">
-        <div className="w-9/12">
-          <h2 className="exp-con-h2">Recent Contributions</h2>
-          <div className="exp-con-div">
-            {users && users ? (
-              users.contributors.map((item, index) => (
-                <Contributions key={index} item={item} />
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        </div>
+        {users.contributors ? (
+          <>
+            <div className="w-9/12">
+              <h2 className="exp-con-h2">Recent Contributions</h2>
+              <div className="exp-con-div">
+                {users && users ? (
+                  users.contributors.map((item, index) => (
+                    <Contributions key={index} item={item} />
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="exp-com-div">
           <Companies text={"Trending Topics"} />
         </div>

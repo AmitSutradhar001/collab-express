@@ -2,36 +2,38 @@ import bcryptjs from "bcryptjs";
 import { User } from "../data/mongodb.js";
 
 export const updateUser = async (req, res, next) => {
-  if (req.body.password) {
-    if (req.body.password.length < 6) {
-      return next({
-        status: 400,
-        message: "Password must be at least 6 characters!",
-      });
-    }
-    req.body.password = bcryptjs.hashSync(req.body.password, 10);
-  }
-
-  if (req.body.fullname) {
-    if (req.body.fullname.length < 7 || req.body.fullname.length > 20) {
-      return next({
-        status: 400,
-        message: "full name must be between 7 and 20 characters!",
-      });
-    }
-  }
-
   try {
+    const updateFields = {};
+
+    // Hash password if provided
+    if (req.body.password) {
+      if (req.body.password.length < 6) {
+        return next({
+          status: 400,
+          message: "Password must be at least 6 characters!",
+        });
+      }
+      req.body.password = bcryptjs.hashSync(req.body.password, 10);
+    }
+
+    // Validate fullname if provided
+    if (req.body.fullname) {
+      if (req.body.fullname.length < 7 || req.body.fullname.length > 20) {
+        return next({
+          status: 400,
+          message: "Full name must be between 7 and 20 characters!",
+        });
+      }
+    }
+
+    // Add only provided fields to updateFields
+    Object.keys(req.body).forEach((key) => {
+      updateFields[key] = req.body[key];
+    });
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
-      {
-        $set: {
-          fullname: req.body.fullname,
-          email: req.body.email,
-          profilePicture: req.body.profilePicture,
-          password: req.body.password,
-        },
-      },
+      { $set: updateFields },
       { new: true }
     );
 
@@ -51,6 +53,7 @@ export const updateUser = async (req, res, next) => {
     });
   }
 };
+
 
 export const deleteUser = async (req, res, next) => {
   const userId = req.user._id;
