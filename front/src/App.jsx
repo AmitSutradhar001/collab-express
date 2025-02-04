@@ -75,7 +75,7 @@ function App() {
                   path="transactionhistory"
                   element={<Transactionhistory />}
                 />
-                <Route path="detailscreen" element={<DetailScreen />} />
+                <Route path="/detail-screen/:id" element={<DetailScreen />} />
                 <Route
                   path="contestdescriptionpage"
                   element={<ContestDescriptionPage />}

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useApi } from "../context/ApiContext.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const FundScreen = () => {
   const { clanId } = useParams();
+  const { user } = useSelector((state) => state.user);
   const [point, setPoint] = useState(0);
   const [fundData, setFundData] = useState(null);
   const api = useApi();
+  const navigate = useNavigate()
   useEffect(() => {
     async function fetchData() {
       const fundResponse = await api.get(`/clan_points/by-id/${clanId}`, {
@@ -18,6 +21,7 @@ const FundScreen = () => {
         withCredentials: true, // Required to send and receive cookies
       });
       setFundData(fundResponse.data);
+      console.log(fundResponse.data);
     }
     fetchData();
   }, []);
@@ -61,17 +65,36 @@ const FundScreen = () => {
       );
       if (res.status == 200) {
         setFundData(res.data);
-        setPoint(0)
-        return toast.info("The withdraw is successfull!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        setPoint(0);
+        const receiptRes = await api.post(
+          `/receipt/create/`,
+          {
+            userId: user._id,
+            userName: user.fullname,
+            clanId: fundData.clanId,
+            clanName: fundData.clanName,
+            pointSpend: point,
+            date: new Date().toISOString(),
+          },
+          {
+            headers: {
+              "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+            },
+            withCredentials: true, // Required to send and receive cookies
+          }
+        );        
+          toast.info("The withdraw is successfull!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        setTimeout(() => navigate(`/detail-screen/${receiptRes.data._id}`));
+          
       }
     } catch (error) {
       return toast.success(error.message, {

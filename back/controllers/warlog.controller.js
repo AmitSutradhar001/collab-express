@@ -28,6 +28,18 @@ export const createWarLog = async (req, res) => {
       destructionPercentage,
     });
 
+    // Update the Clan's war statistics based on the result
+    if (result === "Win") {
+      clan.warWins += 1;
+    } else if (result === "Lose") {
+      clan.warLosses += 1;
+    } else if (result === "Draw") {
+      clan.warTies += 1;
+    }
+    
+    // Save the updated clan data
+    await clan.save();
+
     res
       .status(201)
       .json({ message: "War Log created successfully", data: newWarLog });

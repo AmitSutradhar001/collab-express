@@ -1,4 +1,4 @@
-const StatusCard = () => {
+const StatusCard = ({ data, formattedDate }) => {
   return (
     <div className="w-72 border-[1px] border-black  bg-[#F9F9F9] rounded-lg p-4">
       {/* Header */}
@@ -6,7 +6,7 @@ const StatusCard = () => {
         <p className="text-lg font-semibold">Status</p>
         <p className="text-gray-500 text-sm">
           Completed{" "}
-          <span className="inline-block w-2 h-2 bg-gray-300 rounded-full"></span>
+          <span className="inline-block w-2 h-2 bg-green-700 rounded-full"></span>
         </p>
       </div>
 
@@ -16,13 +16,13 @@ const StatusCard = () => {
         <div className="flex items-start">
           <div className="flex flex-col items-center mr-3">
             {/* Circle */}
-            <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+            <div className="w-3 h-3 bg-green-600 rounded-full"></div>
             {/* Vertical line */}
-            <div className="w-0.5 h-12 bg-gray-300"></div>
+            <div className="w-0.5 h-12 bg-green-400"></div>
           </div>
           <div>
-            <p className="font-semibold">Paid by Ashish</p>
-            <p className="text-sm text-gray-500">10 May 2024, 12:35 AM</p>
+            <p className="font-semibold">Paid by {data?.clanName}</p>
+            <p className="text-sm text-gray-500">{formattedDate}</p>
           </div>
         </div>
 
@@ -30,13 +30,13 @@ const StatusCard = () => {
         <div className="flex items-start">
           <div className="flex flex-col items-center mr-3">
             {/* Circle */}
-            <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+            <div className="w-3 h-3 bg-green-600 rounded-full"></div>
             {/* Vertical line */}
-            <div className="w-0.5 h-12 bg-gray-300"></div>
+            <div className="w-0.5 h-12 bg-green-400"></div>
           </div>
           <div>
             <p className="font-semibold">Processed</p>
-            <p className="text-sm text-gray-500">11 May 2024, 10:15 AM</p>
+            <p className="text-sm text-gray-500">{formattedDate}</p>
           </div>
         </div>
 
@@ -44,12 +44,12 @@ const StatusCard = () => {
         <div className="flex items-start">
           <div className="flex flex-col items-center mr-3">
             {/* Circle */}
-            <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-            <div className="w-0.5 h-12 bg-gray-300"></div>
+            <div className="w-3 h-3 bg-green-600 rounded-full"></div>
+            <div className="w-0.5 h-12 bg-green-400"></div>
           </div>
           <div>
-            <p className="font-semibold">Received by Arvind</p>
-            <p className="text-sm text-gray-500">12 May 2024, 12:35 PM</p>
+            <p className="font-semibold">Received by {data?.userName}</p>
+            <p className="text-sm text-gray-500">{formattedDate}</p>
           </div>
         </div>
       </div>
