@@ -2,7 +2,10 @@
   @apply bg-[#F9F9F9] w-full lg:w-2/6 h-fit lg:h-screen p-8 border-r-2;
 }
 .psd-in {
-  @apply flex flex-wrap gap-4 justify-start items-start;
+  @apply flex gap-4 justify-start items-start;
+}
+.psd-in-img{
+  @apply w-16 h-16 p-2
 }
 .psd-in-2 {
   @apply w-12 h-12 p-12 bg-gray-200 rounded-lg;

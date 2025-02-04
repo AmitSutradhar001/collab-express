@@ -4,26 +4,30 @@ import { useNavigate } from "react-router-dom";
 import MultiInput from "./MultiInput";
 import downArrow from "/downArrow.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { updateContributor } from "../../redux/contributorSlice";
 import { toast, ToastContainer } from "react-toastify";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import axios from "axios";
 import { useApi } from "../../context/ApiContext";
-
+import { login } from "../../redux/userSlice.js";
 
 const Personal = () => {
-  const [imageFileUrl, setImageFileUrl] = useState(null);
+  const { user } = useSelector((state) => state.user);
+  const [imageFileUrl, setImageFileUrl] = useState(user?.profilePicture || "");
   const filePick = useRef();
-  const api = useApi()
+  const api = useApi();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user_id } = useSelector((state) => state.user.user);
   const cld = new Cloudinary({ cloud: { cloudName: "dzely4n74" } });
+  useEffect(() => {
+    if (user?.profileimage) {
+      setImageFileUrl(user.profileimage);
+    }
+  }, [user]); // Update when user changes
 
   // Use this sample image or upload your own via the Media Explorer
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const fullname = formData.get("fullName");
@@ -36,56 +40,54 @@ const Personal = () => {
       return toast.warn("Fill the form first!");
     }
 
-     try {
-          const loginResponse = await api.put(
-            "/user/update-user",
-            { fullname, phNo, bio, role, stack },
-            {
-              headers: {
-                "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
-              },
-              withCredentials: true, // Required to send and receive cookies
-            }
-          );
-          console.log(loginResponse);
-          if (loginResponse.status === 200) {
-            dispatch(login(newData.user));
-    
-            toast.success("Loged In Successfully!", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setTimeout(() => {
-              navigate("/profile/personal-details");
-            }, 1000);
-          }
-        } catch (error) {
-          console.log(error);
-    
-          toast.error(error.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        } 
+    try {
+      const loginResponse = await api.put(
+        "/user/update-user",
+        { fullname, phNo, bio, role, stack, profilePicture: imageFileUrl },
+        {
+          headers: {
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+          },
+          withCredentials: true, // Required to send and receive cookies
+        }
+      );
+      console.log(loginResponse.data.user);
+      if (loginResponse.status === 200) {
+        dispatch(login(loginResponse.data.user));
 
-    // navigate("/profile/work-experience");
+        toast.success("Loged In Successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/profile/experience");
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
   // Store image URL in localStorage and update the state
   const handleImgChange = async (e) => {
     e.preventDefault();
-    const file = e.target.files[0];    
+    const file = e.target.files[0];
     if (!file) return;
     const formData = new FormData();
     formData.append("file", file);
@@ -108,7 +110,7 @@ const Personal = () => {
 
   return (
     <div className="ps-outer">
-      <ToastContainer style={{ top: "100px" }}/>
+      <ToastContainer style={{ top: "100px" }} />
       <Sidebar />
       <div className=" ps-inn">
         <div className="ps-inn-1">
@@ -179,7 +181,8 @@ const Personal = () => {
                   Phone no.
                 </label>
                 <div className="ps-f-in-div">
-                  <input type="number"
+                  <input
+                    type="number"
                     name="phone"
                     id="phone"
                     placeholder="9827XXXXXX"

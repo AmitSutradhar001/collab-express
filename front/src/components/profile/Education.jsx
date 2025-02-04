@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar from "../profile/Sidebar";
+import Sidebar from "./Sidebar";
 import DatePicker from "react-datepicker";
 import "../../css/components/profile/Personal.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateContributor } from "../../redux/contributorSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
-export const ProjectScreen = () => {
+
+const Education = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const api = useApi();
@@ -228,3 +229,4 @@ export const ProjectScreen = () => {
     </div>
   );
 };
+export default Education

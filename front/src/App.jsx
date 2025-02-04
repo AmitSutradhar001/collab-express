@@ -16,14 +16,12 @@ import { ProfileLayout } from "./layout/ProfileLayout";
 import Personal from "./components/profile/Personal";
 import Experience from "./components/profile/Experience";
 import { ApiProvider } from "./context/ApiContext";
-// import store from "./redux/store";
 import { store, persistor } from "./redux/store";
 import { Provider } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AddProjects from "./pages/AddProjects";
 import EditProject from "./pages/EditProject";
-import { ProjectScreen } from "./components/profile/ProjectScreen";
-// import { MySkills } from "./components/profile/MySkills";
+import Education from "./components/profile/Education.jsx";
 import { PersistGate } from "redux-persist/integration/react";
 import Clan from "./pages/Clan";
 import ClanList from "./pages/ClanList";
@@ -43,7 +41,7 @@ import UserRoute from "./components/UserRoute";
 import ProjectRoute from "./components/ProjectRoute";
 import ProjectAdminRoute from "./components/ProjectAdminRoute";
 import ContributorsRoute from "./components/ContributorsRoute";
-import Discord from './components/clan/Discord.jsx'
+import Discord from "./components/clan/Discord.jsx";
 function App() {
   return (
     <Provider store={store}>
@@ -146,16 +144,16 @@ function App() {
                   element={<ProtectedRoute element={<Profile />} />}
                 />
                 <Route
-                  path="personal-details"
+                  path="details"
                   element={<ProtectedRoute element={<Personal />} />}
                 />
                 <Route
-                  path="work-experience"
+                  path="experience"
                   element={<ProtectedRoute element={<Experience />} />}
                 />
                 <Route
-                  path="project-screen"
-                  element={<ProtectedRoute element={<ProjectScreen />} />}
+                  path="education"
+                  element={<ProtectedRoute element={<Education />} />}
                 />
                 {/* <Route
                   path="my-skills"

@@ -3,9 +3,9 @@ import "../../css/components/Explore/Contributions.css";
 const Contributions = ({ item }) => {
   return (
     <div className="c-outer">
-      <div className="c-pro"></div>
+        <img className="c-pro" src={item?.profilePicture} />
       <div className="c-inner">
-        <h2 className="c-inner-h2">{item ? item.email : "Ashish Singh"}</h2>
+        <h2 className="c-inner-h2">{item ? item.fullname : "Ashish Singh"}</h2>
         <h3 className="c-inner-h3">Justo pellentesque turpis etiam egestas.</h3>
         <p className="c-inner-p">
           Tortor nibh integer mi mauris dolor aliquam gravida est. Cursus sed

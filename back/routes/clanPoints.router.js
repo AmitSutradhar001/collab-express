@@ -6,7 +6,7 @@ import {
   getClanPointByClanId,
   updateClanPoint,
 } from "../controllers/clanPoints.controller.js";
-import { verifyToken } from "../middleware/verifyUser.js";
+// import { verifyToken } from "../middleware/verifyUser.js";
 const clanPointsRouter = Router();
 
 clanPointsRouter.post("/create", createClanPoint);

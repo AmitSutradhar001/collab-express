@@ -2,7 +2,7 @@
   @apply flex flex-col md:flex-row gap-4 border-b-2 py-4;
 }
 .c-pro {
-  @apply p-5 w-5 h-5 rounded-full border-[1px] border-black;
+  @apply w-20 h-10 rounded-full;
 }
 .c-inner {
   @apply gap-1;

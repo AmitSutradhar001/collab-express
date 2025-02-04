@@ -20,7 +20,7 @@
   @apply flex justify-start items-start gap-4 lg:px-14;
 }
 .ps-inn-3-in {
-  @apply p-8 bg-gray-300 rounded-full cursor-pointer;
+  @apply  bg-gray-300 rounded-full cursor-pointer;
 }
 .ps-inn-3-in-2 {
   @apply flex flex-col justify-start items-start;

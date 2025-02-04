@@ -66,7 +66,7 @@ export const Login = () => {
           theme: "light",
         });
         setTimeout(() => {
-          navigate("/profile/personal-details");
+          navigate("/profile/details");
         }, 1000);
       }
     } catch (error) {

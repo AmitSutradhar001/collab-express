@@ -60,11 +60,7 @@ const Sidebar = () => {
     <div className="psd-out">
       {/* Profile logo and name div */}
       <div className="psd-in">
-        <img
-          src={user.profilePicture}
-          className="w-20 h-20 p-2"
-          alt="Profile"
-        />
+        <img src={user.profilePicture} className="psd-in-img" alt="Profile" />
 
         <div className="psd-in-3">
           <h2 className="psd-h2">{user ? user.fullname : "Vedant Tiwari"}</h2>
@@ -83,7 +79,7 @@ const Sidebar = () => {
         <h2 className="psd-des-t">I am an Android Developer and coder</h2>
         <div className="psd-ul">
           <div className="psd-ul-in">
-            <NavLink to={"/profile/personal-details"} className="psd-ul-link">
+            <NavLink to={"/profile/details"} className="psd-ul-link">
               <span>Edit Profile</span>
             </NavLink>
             <div className="psd-ul-pro-out">
@@ -105,21 +101,15 @@ const Sidebar = () => {
           <>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Full Name</li>
-              <li className="psd-p-in-li">
-                {profile ? profile?.contributor?.name : "Amit Sutradhar"}
-              </li>
+              <li className="psd-p-in-li">{user ? user.fullname : ""}</li>
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Role</li>
-              <li className="psd-p-in-li">
-                {profile ? profile?.contributor?.role : "Web Developer"}
-              </li>
+              <li className="psd-p-in-li">{user ? user.role : ""} </li>
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Phone no.</li>
-              <li className="psd-p-in-li">
-                {profile ? profile?.contributor?.phone_number : "1234567890"}
-              </li>
+              <li className="psd-p-in-li">{user ? user.phNo : ""}</li>
             </ul>
           </>
         )}
@@ -136,20 +126,12 @@ const Sidebar = () => {
           <>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Institute</li>
-              <li className="psd-p-in-li">
-                {profile ? profile?.educations?.institute : "Delhi"}
-              </li>
+              <li className="psd-p-in-li">{user ? user?.instName : ""}</li>
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Degree</li>
               <li className="psd-p-in-li">
-                {profile ? profile?.educations?.degree : "BCA"}
-              </li>
-            </ul>
-            <ul className="psd-p-in-ul">
-              <li className="psd-p-in-li">Location</li>
-              <li className="psd-p-in-li">
-                {profile ? profile?.educations?.location : "Kolkata"}
+                {user ? user?.instDegreeName : ""}
               </li>
             </ul>
           </>
@@ -167,65 +149,19 @@ const Sidebar = () => {
           <>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Company</li>
-              <li className="psd-p-in-li">
-                {profile
-                  ? profile?.contributor?.experiences[0]?.company_name
-                  : "collab"}
-              </li>
+              <li className="psd-p-in-li">{user ? user.comName : ""}</li>
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Location</li>
-              <li className="psd-p-in-li">
-                {profile
-                  ? profile?.contributor?.experiences[0]?.location
-                  : "Kolkata"}
-              </li>
+              <li className="psd-p-in-li">{user ? user?.comLocation : ""}</li>
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Position</li>
               <li className="psd-p-in-li">
-                {profile
-                  ? profile?.contributor?.experiences[0]?.position
-                  : "Front end"}
+                {user? user.comPosition :""}
               </li>
             </ul>
           </>
-        )}
-      </div>
-      {/* Skills */}
-      <div className="psd-p-out">
-        <div onClick={toggleSkills} className="psd-p-in">
-          <div className="psd-p-in-1">Skills</div>
-          <button>
-            <img src={showPersonalSkills ? Mi : Pl} alt="toggle icon" />
-          </button>
-        </div>
-        {showPersonalSkills && (
-          <ul className="psd-p-in-ul">
-            {/* {personalDetails.map((detail, index) => (
-              <li key={index} className="psd-p-in-li">
-                {detail.key}
-              </li>
-            ))} */}
-          </ul>
-        )}
-      </div>
-      {/* Portfolio */}
-      <div className="psd-p-out">
-        <div onClick={togglePortfolio} className="psd-p-in">
-          <div className="psd-p-in-1">Portfolio</div>
-          <button>
-            <img src={showPersonalPortfolio ? Mi : Pl} alt="toggle icon" />
-          </button>
-        </div>
-        {showPersonalPortfolio && (
-          <ul className="psd-p-in-ul">
-            {/* {personalDetails.map((detail, index) => (
-              <li key={index} className="psd-p-in-li">
-                {detail.key}
-              </li>
-            ))} */}
-          </ul>
         )}
       </div>
     </div>
