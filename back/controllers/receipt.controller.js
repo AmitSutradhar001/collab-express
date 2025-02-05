@@ -101,3 +101,19 @@ export const deleteReceipt = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// Get all receipts by clan ID
+export const getReceiptsByClanId = async (req, res) => {
+  try {
+    const { clanId } = req.params;
+    const receipts = await Receipt.find({ clanId });
+
+    if (!receipts.length) {
+      return res.status(404).json({ message: "No receipts found for this clan" });
+    }
+
+    res.status(200).json(receipts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

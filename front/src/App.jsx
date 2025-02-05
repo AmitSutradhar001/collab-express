@@ -72,7 +72,7 @@ function App() {
                 <Route path="fund-screen/:clanId" element={<FundScreen />} />
                 <Route path="leaguechallenges" element={<LeagueChallenges />} />
                 <Route
-                  path="transactionhistory"
+                  path="transaction-history/:clanId"
                   element={<Transactionhistory />}
                 />
                 <Route path="/detail-screen/:id" element={<DetailScreen />} />

@@ -23,6 +23,10 @@ const receiptModel = new Schema(
       default: "Mobile",
       set: (val) => (val === null ? "Mobile" : val),
     },
+    status: {
+      type: String,
+      default:"Success"
+    },
     date: {
       type: Date,
       required: true,
