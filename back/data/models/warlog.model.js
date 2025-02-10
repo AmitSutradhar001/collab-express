@@ -7,10 +7,11 @@ const warlogModel = new Schema(
       required: true,
       ref: "clan",
     },
+    isLive: { type: Boolean, required:true },
     warDate: { type: Date, required: true },
     opponentClan: { type: String, required: true },
-    result: { type: String, enum: ["Win", "Lose", "Draw"], required: true },
-    stars: { type: Number, required: true }, // Example war performance metric
+    result: { type: String, enum: ["Win", "Lose", "Draw"] },
+    stars: { type: Number }, // Example war performance metric
     destructionPercentage: { type: Number }, // Another clan's destruction percentage
     clanDestructionPercentage: { type: Number }, // Your clan's destruction percentage
   },

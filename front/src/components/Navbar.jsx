@@ -9,7 +9,7 @@ import { resetProjects } from "../redux/projectsSlice.js";
 import "../css/components/Navbar.css";
 
 const Navbar = () => {
-  const user = useSelector((state) => state.user.user);
+  const {user} = useSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -64,7 +64,18 @@ const Navbar = () => {
             >
               Clans
             </NavLink>
-
+            {user?.clanId && (
+              <>
+                <NavLink
+                  to={`/clan/${user.clanId}`}
+                  className={({ isActive }) =>
+                    isActive ? "nv-active" : "nv-inactive"
+                  }
+                >
+                  My Clan
+                </NavLink>
+              </>
+            )}
             {user ? (
               <div className="relative">
                 <img

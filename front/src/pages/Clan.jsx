@@ -3,9 +3,11 @@ import { useApi } from "../context/ApiContext.jsx";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading.jsx";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Clan = () => {
   const {id} = useParams()
   const [clanData, setClanData] = useState(null);
+  const {user} = useSelector((state) => state.user);
   const api = useApi();
   useEffect(() => {
     async function fetchData() {
@@ -163,15 +165,23 @@ const Clan = () => {
             </Link>
             <Link
               to={`/warlog/${id}`}
-              className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+              className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg text-center"
             >
               War Log
             </Link>
+            {user?.clanId == id && (
+              <Link
+                to={`/league-challenges/${id}`}
+                className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg text-center"
+              >
+                Match
+              </Link>
+            )}
           </div>
           <div className="flex gap-5 w-full md:w-fit justify-between items-center">
             <Link
               to={`/fund-screen/${id}`}
-              className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+              className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg text-center"
             >
               My Fund
             </Link>

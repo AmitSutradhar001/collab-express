@@ -70,7 +70,7 @@ function App() {
                 <Route path="clan-list" element={<ClanList />} />
                 <Route path="warlog/:clanId" element={<WarLog />} />
                 <Route path="fund-screen/:clanId" element={<FundScreen />} />
-                <Route path="leaguechallenges" element={<LeagueChallenges />} />
+                <Route path="league-challenges/:clanId" element={<LeagueChallenges />} />
                 <Route
                   path="transaction-history/:clanId"
                   element={<Transactionhistory />}

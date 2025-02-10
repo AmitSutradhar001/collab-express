@@ -9,6 +9,7 @@ export const createWarLog = async (req, res) => {
     result,
     stars,
     destructionPercentage,
+    isLive,
   } = req.body;
 
   try {
@@ -26,6 +27,7 @@ export const createWarLog = async (req, res) => {
       result,
       stars,
       destructionPercentage,
+      isLive
     });
 
     // Update the Clan's war statistics based on the result
@@ -88,13 +90,19 @@ export const getWarLogById = async (req, res) => {
 // Update a War Log
 export const updateWarLog = async (req, res) => {
   const { id } = req.params;
-  const { warDate, opponentClan, result, stars, destructionPercentage } =
-    req.body;
+  const {
+    warDate,
+    opponentClan,
+    isLive,
+    result,
+    stars,
+    destructionPercentage,
+  } = req.body;
 
   try {
     const updatedWarLog = await WarLog.findByIdAndUpdate(
       id,
-      { warDate, opponentClan, result, stars, destructionPercentage },
+      { warDate, opponentClan, isLive, result, stars, destructionPercentage },
       { new: true } // Return the updated document
     );
 
