@@ -7,7 +7,7 @@ const warlogModel = new Schema(
       required: true,
       ref: "clan",
     },
-    isLive: { type: Boolean, required:true },
+    isLive: { type: Boolean, default:false },
     warDate: { type: Date, required: true },
     opponentClan: { type: String, required: true },
     result: { type: String, enum: ["Win", "Lose", "Draw"] },

@@ -15,11 +15,11 @@ export const createClan = async (req, res) => {
       });
     }
 
-    const user = await User.findByIdAndUpdate(req.user._id, {
-      $set: {
-        clanId: savedClan._id,
-      },
-    });
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { clanId: savedClan._id } },
+      { new: true } // Ensures updated user is returned
+    );
 
     const points = new ClanPoints({
       clanName: savedClan.name,
