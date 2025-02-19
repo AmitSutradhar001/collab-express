@@ -76,6 +76,19 @@ const Navbar = () => {
                 </NavLink>
               </>
             )}
+            {user?.clanId && (
+              <>
+                {" "}
+                <NavLink
+                  to={`/contest_page`}
+                  className={({ isActive }) =>
+                    isActive ? "nv-active" : "nv-inactive"
+                  }
+                >
+                  Contest
+                </NavLink>
+              </>
+            )}
             {user ? (
               <div className="relative">
                 <img

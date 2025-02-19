@@ -44,7 +44,7 @@ const Transactionhistory = () => {
                     Date
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Amount
+                    Points
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Status

@@ -14,10 +14,7 @@ const clanModel = new Schema(
       type: String,
       required: true,
     },
-    clanLevel: {
-      type: String,
-      default: 1
-    },
+    clanPoints:{type:Number, default:0},
     members: {
       type: Array,
       required: true,

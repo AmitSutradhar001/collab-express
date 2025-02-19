@@ -10,7 +10,7 @@ const CreateClan = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const clanLeader = user.fullname;
+  const clanLeader = user?.fullname;
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);

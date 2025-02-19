@@ -80,14 +80,14 @@ function App() {
                   path="contestdescriptionpage"
                   element={<ContestDescriptionPage />}
                 />
-                <Route path="/contestpage" element={<ContestPage />}>
+                <Route path="/contest_page" element={<ContestPage />}>
                   <Route index element={<PostContest />} />
                   <Route
-                    path="/contestpage/mycontests"
+                    path="/contest_page/my_contests"
                     element={<MyContests />}
                   />
                   <Route
-                    path="/contestpage/leaderboard"
+                    path="/contest_page/leader_board"
                     element={<Leaderboard />}
                   />
                 </Route>

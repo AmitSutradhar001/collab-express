@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useApi } from "../context/ApiContext.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,21 +14,21 @@ const FundScreen = () => {
   const navigate = useNavigate()
   useEffect(() => {
     async function fetchData() {
-      const fundResponse = await api.get(`/clan_points/by-id/${clanId}`, {
+      const fundResponse = await api.get(`/clan/by-id/${clanId}`, {
         headers: {
           "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
         },
         withCredentials: true, // Required to send and receive cookies
       });
-      setFundData(fundResponse.data);
-      console.log(fundResponse.data);
+      setFundData(fundResponse.data.clan);
+      // console.log(fundResponse.data);
     }
     fetchData();
   }, []);
   const clickSubmit = async (e) => {
     e.preventDefault();
     if (point == 0)
-      return toast.info("The value is zero! its not possible to withdraw!", {
+      return toast.info("The point is zero! it's not possible to withdraw!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -38,9 +38,9 @@ const FundScreen = () => {
         progress: undefined,
         theme: "light",
       });
-    if (point > fundData?.points)
+    if (point > fundData?.clanPoints)
       return toast.info(
-        "The value is not sufficient! its not possible to withdraw!",
+        "The point is not sufficient! it's not possible to withdraw!",
         {
           position: "top-right",
           autoClose: 5000,
@@ -54,8 +54,8 @@ const FundScreen = () => {
       );
     try {
       const res = await api.put(
-        `/clan_points/update/${fundData._id}`,
-        { points: fundData.points - point },
+        `/clan/update/${clanId}`,
+        { clanPoints: Number(fundData.clanPoints) - point },
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -64,15 +64,15 @@ const FundScreen = () => {
         }
       );
       if (res.status == 200) {
-        setFundData(res.data);
+        setFundData(res.data.clan);
         setPoint(0);
         const receiptRes = await api.post(
           `/receipt/create/`,
           {
             userId: user._id,
             userName: user.fullname,
-            clanId: fundData.clanId,
-            clanName: fundData.clanName,
+            clanId: fundData._id,
+            clanName: fundData.name,
             pointSpend: point,
             date: new Date().toISOString(),
           },
@@ -83,7 +83,7 @@ const FundScreen = () => {
             withCredentials: true, // Required to send and receive cookies
           }
         );        
-          toast.info("The withdraw is successfull!", {
+          toast.info("The point withdraw is successfull!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -119,8 +119,8 @@ const FundScreen = () => {
             <div className="w-full bg-[#F9F9F9] flex flex-col border-2 h-fit rounded-md">
               <div className="flex justify-between items-start p-4 border-b-2">
                 <div className="flex-wrap">
-                  <p className="font-semibold">Total Fund Available</p>
-                  <p>₹ {fundData?.points}</p>
+                  <p className="font-semibold">Total Available Points</p>
+                  <p>₹ {fundData?.clanPoints}</p>
                 </div>
                 <svg
                   className="w-5 h-5"
@@ -135,7 +135,7 @@ const FundScreen = () => {
                 </svg>
               </div>
               <div className="flex justify-between items-start p-4 border-b-2">
-                <p className="font-semibold">Fund to withdraw</p>
+                <p className="font-semibold">Points to withdraw</p>
                 <div className="flex gap-2 justify-center items-center">
                   <p className="text-lg">
                     00.<span className="text-sm">00</span>
@@ -151,7 +151,9 @@ const FundScreen = () => {
                 </div>
               </div>
               <div className="flex justify-between items-start p-4">
-                <p className="font-semibold">View all transactions</p>
+                <Link to={`/transaction-history/${clanId}`} className="font-semibold">
+                  View all transactions
+                </Link>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-7 h-7"
@@ -169,19 +171,19 @@ const FundScreen = () => {
               className="w-full bg-[#F9F9F9] flex flex-col border-2 h-fit rounded-md"
             >
               <div className="border-b-2 flex p-4 justify-center items-center font-semibold">
-                Withdraw Fund
+                Withdraw Points
               </div>
               <div className="border-b-2 flex flex-col gap-4 p-4 justify-center items-center text-sm">
                 <div className=" flex justify-between items-center w-full">
-                  <p>Withdrawable Fund</p>
-                  <p>₹ {fundData?.points}</p>
+                  <p>Withdrawable Points</p>
+                  <p>₹ {fundData?.clanPoints}</p>
                 </div>
                 <div className=" flex justify-between items-center w-full">
-                  <p>Enter Amount</p>
+                  <p>Enter Point</p>
                   <input
                     type="number"
                     className="text-lg w-20 placeholder:text-end outline-none text-end"
-                    max={Number(fundData?.points)}
+                    max={Number(fundData?.clanPoints)}
                     placeholder="00.00"
                     value={point}
                     onChange={(e) => {
@@ -192,15 +194,11 @@ const FundScreen = () => {
                 </div>
               </div>
               <div className=" flex flex-col gap-4 p-4 justify-center items-center text-sm">
-                <div className=" flex justify-between items-center w-full">
-                  <p>To Federal Bank XXXX9876</p>
-                  <p>Change</p>
-                </div>
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-semibold py-2 rounded-md mb-2"
                 >
-                  WITHDRAW FUND
+                  WITHDRAW Points
                 </button>
               </div>
             </form>

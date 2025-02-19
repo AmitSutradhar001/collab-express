@@ -12,7 +12,7 @@ const ContestHead = () => {
         <div className="w-full flex justify-center item-center px-10 lg:px-0">
           <div className="bg-gradient-to-r from-purple-400 to-blue-300 rounded-lg w-full lg:w-1/2 flex flex-col gap-5 justify-center items-center py-5 px-16">
             <p className="text-3xl text-white font-semibold">
-              Upcoming Contests
+              Welcome
             </p>
             <div className="w-full flex flex-col md:flex-row justify-around items-center gap-10">
               <div className="w-full md:w-1/2  h-48 bg-white rounded-md flex flex-col justify-between items-end">

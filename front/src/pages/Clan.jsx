@@ -1,18 +1,126 @@
 import ProgressBar from "../components/clan/ProgressBar";
 import { useApi } from "../context/ApiContext.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loading from "../components/Loading.jsx";
-import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+import { login } from "../redux/userSlice.js";
+import { Cloudinary } from "@cloudinary/url-gen";
+import axios from "axios";
 const Clan = () => {
-  const {id} = useParams()
+  const { id } = useParams();
   const [clanData, setClanData] = useState(null);
-  const {user} = useSelector((state) => state.user);
+  const [imageFileUrl, setImageFileUrl] = useState("");
+
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const filePick = useRef(null); 
+
   const api = useApi();
   useEffect(() => {
     async function fetchData() {
-      const clanResponse = await api.get(
-        `/clan/by-id/${id}`,
+      const clanResponse = await api.get(`/clan/by-id/${id}`, {
+        headers: {
+          "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+        },
+        withCredentials: true, // Required to send and receive cookies
+      });
+      // console.log(clanResponse);
+
+      setClanData(clanResponse.data.clan);
+    }
+    fetchData();
+  }, []);
+  // Store image URL in localStorage and update the state
+  const handleImgChange = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "collab"); // Replace with your Cloudinary upload preset
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/dzely4n74/image/upload`,
+        formData
+      );
+      setImageFileUrl(response.data.secure_url);
+      console.log("Uploaded Image URL:", response.data.secure_url);
+        const res = await api.put(
+          `/clan/update/${id}`,
+          { profileImage: response.data.secure_url },
+          {
+            headers: {
+              "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+            },
+            withCredentials: true, // Required to send and receive cookies
+          }
+      );
+       if (res.status == 200) {
+         toast.success("Success!", {
+           position: "top-right",
+           autoClose: 5000,
+           hideProgressBar: false,
+           closeOnClick: true,
+           pauseOnHover: true,
+           draggable: true,
+           progress: undefined,
+           theme: "light",
+         });
+        //  console.log(res.data.clan);
+         
+         setClanData(res.data.clan);
+       }
+    } catch (error) {
+      console.error("Upload Error:", error);
+    }
+  };
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.delete(`/clan/delete/${id}`, {
+        headers: {
+          "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+        },
+        withCredentials: true, // Required to send and receive cookies
+      });
+      if (res.status == 200) {
+        toast.success("Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/clan-list");
+        }, 1000);
+      }
+    } catch (error) {
+      toast.error("Delete Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+  const handleJoin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post(
+        `/clan/joinClan`,
+        { userId: user._id, clanId: id },
         {
           headers: {
             "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
@@ -20,25 +128,141 @@ const Clan = () => {
           withCredentials: true, // Required to send and receive cookies
         }
       );
-      // console.log(clanResponse);
-
-      setClanData(clanResponse.data.clan);
+      if (res.status == 200) {
+        toast.success("Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(login(res.data.user));
+        setClanData(res.data.clan);
+      }
+    } catch (error) {
+      toast.error("Delete Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
-    fetchData();
-  }, []);
+  };
+  const handleLeave = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post(
+        `/clan/leaveClan`,
+        { userId: user._id, clanId: id },
+        {
+          headers: {
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+          },
+          withCredentials: true, // Required to send and receive cookies
+        }
+      );
+      if (res.status == 200) {
+        toast.success("Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(login(res.data.user));
+        setClanData(res.data.clan);
+      }
+    } catch (error) {
+      toast.error("Delete Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+  const handleSwitch = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post(
+        `/clan/switchClan`,
+        { userId: user._id, currentClanId: user.clanId, newClanId: id },
+        {
+          headers: {
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+          },
+          withCredentials: true, // Required to send and receive cookies
+        }
+      );
+      if (res.status == 200) {
+        toast.success("Success!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        dispatch(login(res.data.user));
+        setClanData(res.data.clan);
+      }
+    } catch (error) {
+      toast.error("Delete Failed", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
   if (!clanData) return <Loading />;
-  console.log(clanData);
+
   return (
     <div className="w-full flex flex-col gap-3 h-screen">
+      <ToastContainer style={{ top: "100px" }} />
+
       {/* Top Side */}
       <div className="px-10 md:px-20 flex flex-col gap-3 w-full justify-center items-center">
         <div className="w-full py-4 lg:w-9/12 flex flex-col md:flex-row justify-around border-[1px] border-gray-600 rounded-lg mt-10 ">
           {/* first */}
           <div className="p-2 flex flex-wrap justify-start items-start">
-            <img
-              src={clanData?.profileImage}
-              className="w-20 h-20 object-fill rounded-md"
-            />
+            <div
+              onClick={() => filePick.current.click()} // Trigger file input click on div click
+              className="cursor-pointer"
+            >
+              <input
+                ref={filePick}
+                type="file"
+                accept="image/*"
+                onChange={handleImgChange}
+                className="hidden" // Hide the input
+              />
+              <img
+                src={clanData?.profileImage || imageFileUrl}
+                alt="Profile"
+                className="w-20 h-20 object-fill rounded-md"
+              />
+            </div>
           </div>
           {/* second */}
           <div className="md:min-w-72 lg:w-[30rem] 2xl:min-w-[40rem] flex-wrap px-5">
@@ -109,8 +333,8 @@ const Clan = () => {
             {/* Second Div */}
             <div className="mt-5">
               <div className="flex justify-between items-center pb-2 pt-1 border-b-[1px] border-black">
-                <p>Clan Level</p>
-                <p>{clanData?.clanLevel}</p>
+                <p>Solved Issues</p>
+                <p>{clanData?.solvedIssues}</p>
               </div>
               <div className="flex justify-between items-center pb-2 pt-1 border-b-[1px] border-black">
                 <p>Total Members</p>
@@ -147,7 +371,7 @@ const Clan = () => {
                 </button>
               </div>
               <div className="mt-3">
-                <ProgressBar current={clanData?.solvedIssues} total={73864} />
+                <ProgressBar current={clanData?.clanPoints} total={10000} />
               </div>
             </div>
           </div>
@@ -185,9 +409,37 @@ const Clan = () => {
             >
               My Fund
             </Link>
-            <button className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg">
-              Join
-            </button>
+            {!user?.clanId ? (
+              <button
+                onClick={handleJoin}
+                className="min-w-24 bg-green-500 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+              >
+                Join Clan
+              </button>
+            ) : user?.clanId === id ? (
+              user.isAdmin ? (
+                <button
+                  onClick={handleDelete}
+                  className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+                >
+                  Delete Clan
+                </button>
+              ) : (
+                <button
+                  onClick={handleLeave}
+                  className="min-w-24 bg-red-500 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+                >
+                  Leave Clan
+                </button>
+              )
+            ) : (
+              <button
+                onClick={handleSwitch}
+                className="min-w-24 bg-yellow-500 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg"
+              >
+                Switch Clan
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -196,7 +448,7 @@ const Clan = () => {
         <div className="w-full mb-10 px-5 py-4 lg:w-9/12 flex flex-col justify-around border-[1px] border-gray-600 rounded-lg bg-[#F9F9F9] mt-5">
           {/* first */}
           <div className="w-full flex flex-wrap gap-3 justify-between items-center">
-            <p className="text-lg font-semibold">Recommended Members</p>
+            <p className="text-lg font-semibold"> Members</p>
             <button className="flex text-gray-600 justify-center items-center">
               <span>See All</span>
               <svg

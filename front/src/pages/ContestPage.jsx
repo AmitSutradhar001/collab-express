@@ -14,7 +14,7 @@ const ContestPage = () => {
               <div className="flex flex-col flex-wrap mb-6">
                 <div className="flex flex-wrap justify-between items-center md:w-3/5">
                   <NavLink
-                    to="/contestpage"
+                    to="/contest_page"
                     end
                     className={({ isActive }) =>
                       `py-2 px-4 font-semibold rounded-full ${
@@ -26,7 +26,7 @@ const ContestPage = () => {
                   </NavLink>
 
                   <NavLink
-                    to="/contestpage/mycontests"
+                    to="/contest_page/my_contests"
                     className={({ isActive }) =>
                       `py-2 px-4 font-semibold rounded-full ${
                         isActive ? "bg-gray-200 text-black" : "text-gray-400"
@@ -36,7 +36,7 @@ const ContestPage = () => {
                     My Contests
                   </NavLink>
                   <NavLink
-                    to="/contestpage/leaderboard"
+                    to="/contest_page/leader_board"
                     className={({ isActive }) =>
                       `py-2 px-4 font-semibold rounded-full ${
                         isActive ? "bg-gray-200 text-black" : "text-gray-400"
@@ -46,11 +46,7 @@ const ContestPage = () => {
                     LeaderBoard
                   </NavLink>
                 </div>
-                <div className="flex justify-end items-center">
-                  <button className="text-gray-600 font-semibold">
-                    View all &gt;
-                  </button>
-                </div>
+
               </div>
               <div className="w-full ">
                 <Outlet />

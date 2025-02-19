@@ -119,23 +119,20 @@ const Personal = () => {
           </div>
           <div className="ps-inn-3">
             <div className="ps-inn-3-outer">
-              {!imageFileUrl ? (
-                <div className="ps-inn-3-in" onClick={handleClick}>
-                  <input
-                    type="file"
-                    ref={filePick}
-                    accept="image/\*"
-                    onChange={handleImgChange}
-                    className="hidden"
-                  />
-                </div>
-              ) : (
+              <div className="ps-inn-3-in" onClick={handleClick}>
+                <input
+                  type="file"
+                  ref={filePick}
+                  accept="image/*"
+                  onChange={handleImgChange}
+                  className="hidden"
+                />
                 <img
-                  src={imageFileUrl}
-                  className="w-20 h-20 rounded-full"
+                  src={imageFileUrl || "default-image-url"} // Use a placeholder if no image
+                  className="w-16 h-16 rounded-full cursor-pointer"
                   alt="Profile"
                 />
-              )}
+              </div>
 
               <div className="ps-inn-3-in-2">
                 <h2 className="ps-inn-3-h2">Profile Picture</h2>
