@@ -48,6 +48,7 @@ const clanModel = new Schema(
       type: Number,
       default: 0,
     },
+    contests:{type:Array,default:[]}
   },
   { timestamps: true }
 );

@@ -76,9 +76,8 @@ const Navbar = () => {
                 </NavLink>
               </>
             )}
-            {user?.clanId && (
+            {user?.isAdmin && (
               <>
-                {" "}
                 <NavLink
                   to={`/contest_page`}
                   className={({ isActive }) =>

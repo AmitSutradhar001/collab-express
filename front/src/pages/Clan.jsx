@@ -118,7 +118,7 @@ const Clan = () => {
   const handleJoin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post(
+      const res = await api.put(
         `/clan/joinClan`,
         { userId: user._id, clanId: id },
         {
@@ -158,7 +158,7 @@ const Clan = () => {
   const handleLeave = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post(
+      const res = await api.put(
         `/clan/leaveClan`,
         { userId: user._id, clanId: id },
         {
@@ -198,7 +198,7 @@ const Clan = () => {
   const handleSwitch = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post(
+      const res = await api.put(
         `/clan/switchClan`,
         { userId: user._id, currentClanId: user.clanId, newClanId: id },
         {
@@ -399,6 +399,14 @@ const Clan = () => {
                 className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg text-center"
               >
                 Match
+              </Link>
+            )}
+            {!user?.isAdmin && clanData?.members?.includes(user?._id) && (
+              <Link
+                to={`/contest_page`}
+                className="min-w-24 bg-gradient-to-l from-blue-500 to-purple-600 text-white font-semibold mt-5 px-3 py-2 rounded-md drop-shadow-lg text-center"
+              >
+                Contest
               </Link>
             )}
           </div>

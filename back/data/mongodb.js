@@ -24,5 +24,5 @@ export const Clan = model("clan", clanModel);
 export const WarLog = model("warlog", warlogModel);
 export const ClanPoints = model("clan-points", clanPointsModel);
 export const Receipt = model("receipt", receiptModel);
-export const Match = model("contest", contestSchema);
+export const Contest = model("contest", contestSchema);
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-const Countdown = () => {
+const Countdown = ({ contest }) => {
   const calculateTimeLeft = () => {
-    const targetDate = new Date("2024-12-31T23:59:59"); // Example target date
+    const targetDate = new Date(contest?.date || "2024-12-31T23:59:59"); // Example target date
     const now = new Date();
     const difference = targetDate - now;
 

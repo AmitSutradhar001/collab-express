@@ -18,8 +18,8 @@ clanRouter.get("/all", getAllClans);
 clanRouter.get("/by-id/:id", getClanById);
 clanRouter.put("/update/:id", updateClan);
 clanRouter.delete("/delete/:id", deleteClan);
-clanRouter.post("/joinClan", joinClan);
-clanRouter.post("/switchClan", switchClan);
-clanRouter.post("/leaveClan", leaveClan);
+clanRouter.put("/joinClan", joinClan);
+clanRouter.put("/switchClan", switchClan);
+clanRouter.put("/leaveClan", leaveClan);
 
 export default clanRouter;

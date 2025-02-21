@@ -1,18 +1,22 @@
 import { Router } from "express";
 import {
-  createMatch,
-  getAllMatches,
-  getMatchById,
-  updateMatch,
-  deleteMatch,
-} from "../controllers/match.controller.js";
+  createContest,
+  getAllContests,
+  getContestById,
+  updateContest,
+  deleteContest,
+  getContestsByAdminId,
+  getContestsByClanId,
+} from "../controllers/contest.controller.js";
 // import { verifyToken } from "../middleware/verifyUser.js";
 const contestRouter = Router();
 
-contestRouter.post("/create", createMatch);
-contestRouter.get("/all", getAllMatches);
-contestRouter.get("/by-id/:id", getMatchById);
-contestRouter.put("/update/:id", updateMatch);
-contestRouter.delete("/delete/:id", deleteMatch);
+contestRouter.post("/create", createContest);
+contestRouter.get("/all", getAllContests);
+contestRouter.get("/by-id/:id", getContestById);
+contestRouter.put("/update/:id", updateContest);
+contestRouter.delete("/delete/:id", deleteContest);
+contestRouter.get("/by-clanId/:clanId", getContestsByClanId);
+contestRouter.get("/by-adminId/:adminId", getContestsByAdminId);
 
 export default contestRouter;

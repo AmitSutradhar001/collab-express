@@ -34,7 +34,7 @@ import ContestDescriptionPage from "./pages/ContestDescriptionPage";
 import ContestPage from "./pages/ContestPage";
 import PostContest from "./components/clan/PostContest";
 import MyContests from "./components/clan/MyContests";
-import Leaderboard from "./components/clan/Leaderboard";
+import AllContest from "./components/clan/AllContest.jsx";
 import TrackRoute from "./components/TrackRoute";
 import PreviousRoutes from "./components/PreviousRoutes";
 import UserRoute from "./components/UserRoute";
@@ -70,14 +70,17 @@ function App() {
                 <Route path="clan-list" element={<ClanList />} />
                 <Route path="warlog/:clanId" element={<WarLog />} />
                 <Route path="fund-screen/:clanId" element={<FundScreen />} />
-                <Route path="league-challenges/:clanId" element={<LeagueChallenges />} />
+                <Route
+                  path="league-challenges/:clanId"
+                  element={<LeagueChallenges />}
+                />
                 <Route
                   path="transaction-history/:clanId"
                   element={<Transactionhistory />}
                 />
                 <Route path="/detail-screen/:id" element={<DetailScreen />} />
                 <Route
-                  path="contestdescriptionpage"
+                  path="/contest_description_page/:id"
                   element={<ContestDescriptionPage />}
                 />
                 <Route path="/contest_page" element={<ContestPage />}>
@@ -87,8 +90,8 @@ function App() {
                     element={<MyContests />}
                   />
                   <Route
-                    path="/contest_page/leader_board"
-                    element={<Leaderboard />}
+                    path="/contest_page/all_contests"
+                    element={<AllContest />}
                   />
                 </Route>
 

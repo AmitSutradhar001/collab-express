@@ -7,9 +7,9 @@ const contestSchema = new Schema(
       required: true,
       trim: true,
     },
+    adminId: { type: Schema.Types.ObjectId, required: true },
     isLive: {
       type: Boolean,
-      required: true,
       default: false,
     },
     date: { type: Date, required: true },

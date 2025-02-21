@@ -139,7 +139,7 @@ const LeagueChallenges = () => {
             <div className="w-full px-20 pb-10">
               <div className="w-full pt-10">
                 <p className="text-lg font-semibold">Live Matches</p>
-                <div className="flex gap-4 justify-start items-center">
+                <div className="flex gap-4 justify-start items-center overflow-auto custom-scrollbar">
                   {data
                     .filter((war) => war.isLive)
                     .map((war) => (
@@ -275,19 +275,8 @@ const LeagueChallenges = () => {
               <div className="w-full pt-10">
                 <div className="flex justify-between gap-3 items-center">
                   <p className="text-lg font-semibold">Recent matches</p>
-                  <div className="flex justify-center items-center gap-2">
-                    <p>See all</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                      id="right-arrow"
-                    >
-                      <path d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z"></path>
-                    </svg>
-                  </div>
                 </div>
-                <div className="flex gap-4 justify-start items-center">
+                <div className="flex gap-4 justify-start items-center ">
                   {data
                     ?.filter(
                       (item) =>
