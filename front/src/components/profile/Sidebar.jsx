@@ -134,6 +134,10 @@ const Sidebar = () => {
                 {user ? user?.instDegreeName : ""}
               </li>
             </ul>
+            <ul className="psd-p-in-ul">
+              <li className="psd-p-in-li">Location</li>
+              <li className="psd-p-in-li">{user ? user?.instLocation : ""}</li>
+            </ul>
           </>
         )}
       </div>
@@ -157,9 +161,7 @@ const Sidebar = () => {
             </ul>
             <ul className="psd-p-in-ul">
               <li className="psd-p-in-li">Position</li>
-              <li className="psd-p-in-li">
-                {user? user.comPosition :""}
-              </li>
+              <li className="psd-p-in-li">{user ? user.comPosition : ""}</li>
             </ul>
           </>
         )}

@@ -12,7 +12,7 @@ const GitIssue = ({ project }) => {
   const { git } = useSelector((state) => state.gitAndCollabProject);
   const handleBtnClick = () => {
     dispatch(set(project));
-    if (user.is_contributor) {
+    if (!user.IsAdmin) {
       if (git) {
         navigate(`/projects/contributor/git/${project.id}`);
       } else {
@@ -55,18 +55,6 @@ const GitIssue = ({ project }) => {
           >
             Details
           </button>
-          {/* {user.is_contributor && (
-            <button
-              disabled={applyed}
-              onClick={handleApplyClick}
-              type="text"
-              className={
-                !applyed ? "oi-btn-inner-s-a-btn" : "oi-btn-inner-s-btn"
-              }
-            >
-              {!applyed ? "Apply now" : "Applyed"}
-            </button>
-          )} */}
         </div>
       </div>
     </div>

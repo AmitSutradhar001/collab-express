@@ -131,7 +131,6 @@ export const joinClan = async (req, res) => {
   const { userId, clanId } = req.body;
 
   try {
-
     // Update user's clanId
     const user = await User.findByIdAndUpdate(
       userId,
@@ -221,5 +220,56 @@ export const switchClan = async (req, res) => {
       .json({ message: "Switched clan successfully", user, clan: newC });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const searchClan = async (req, res) => {
+  try {
+    const { query } = req.body;
+
+    if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    // Case-insensitive regex search
+    const clans = await Clan.find({
+      name: { $regex: new RegExp(query, "i") }, // "i" makes it case insensitive
+    });
+
+    if (clans.length === 0) {
+      return res.status(404).json({ message: "No clans found" });
+    }
+
+    res.status(200).json(clans);
+  } catch (error) {
+    console.error("Error searching clans:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const getFilteredClans = async (req, res) => {
+  try {
+    const { clanType, location, solvedIssues, minimumMembers } = req.body;
+
+    // Build a dynamic filter object
+    let filter = {};
+
+    if (clanType) filter.clanType = clanType;
+    if (location) filter.location = location;
+    if (solvedIssues) filter.solvedIssues = { $gte: parseInt(solvedIssues) };
+    if (minimumMembers) {
+      filter.$expr = {
+        $gte: [{ $size: "$members" }, parseInt(minimumMembers)],
+      };
+    }
+
+    const clans = await Clan.find(filter);
+
+    res.status(200).json({
+      success: true,
+      count: clans.length,
+      clans,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

@@ -8,7 +8,7 @@
   @apply flex gap-4;
 }
 .po-img {
-  @apply p-8 rounded-lg bg-[#D9D9D9];
+  @apply rounded-lg bg-[#D9D9D9];
 }
 .po-h2 {
   @apply text-2xl font-bold;

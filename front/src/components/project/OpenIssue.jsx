@@ -27,7 +27,7 @@ const OpenIssue = ({ project }) => {
     <div className="oi-outer">
       <div className="oi-inner">
         <div className="oi-f-inner">
-          <div className="oi-s-inner"></div>
+          <img src={project?.postImage} className="oi-s-inner" />
           <div>
             <h2 className="oi-h2">{project.title}</h2>
             <h3 className="oi-h3">{project.content}</h3>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateContributor } from "../../redux/contributorSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
+import { login } from "../../redux/userSlice.js";
 
 const Education = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -63,54 +64,46 @@ const Education = () => {
       })
     );
     try {
-      // let endPoint;
-      // if (user.isAdmin) {
-      //   endPoint = import.meta.env.VITE_PADMIN_ENDPOINT;
-      // } else {
-      //   endPoint = import.meta.env.VITE_CONTRIBUTOR_ENDPOINT;
-      // }
-      // const res = await api.post(
-      //   import.meta.env.VITE_CONTRIBUTOR_ENDPOINT,
-      //   contributor,
-      //   {
-      //     headers: {
-      //       "Content-Type": import.meta.env.VITE_CONTRIBUTOR_HEADERS,
-      //     },
-      //   }
-      // );
-      const newCont = {
-        contributor: contributor,
-        educations: {
-          degree,
-          institute,
-          location,
+      const loginResponse = await api.put(
+        "/user/update-user",
+        {
+          instLocation: location,
+          instName: institute,
+          instDegreeName: degree,
+          instStart: start_date,
+          instEnd: end_date,
+          instDescription: description,
+          comEnd: endDate,
         },
-
-        userId: user.user_id,
-      };
-      // if (res.status === 200) {
-      const existingContributors =
-        JSON.parse(localStorage.getItem("contributors")) || [];
-      existingContributors.push(newCont); // Push new contributor data
-      localStorage.setItem(
-        "contributors",
-        JSON.stringify(existingContributors)
+        {
+          headers: {
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+          },
+          withCredentials: true, // Required to send and receive cookies
+        }
       );
+      console.log(loginResponse.data.user);
+      if (loginResponse.status === 200) {
+        dispatch(login(loginResponse.data.user));
 
-      // if (user.isAdmin) {
-      return toast.success("Successfull!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+        toast.success("Successful!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/profile/education");
+        }, 1000);
+      }
     } catch (error) {
       console.log(error);
-      return toast.error(error.message || "Internal error!", {
+
+      toast.error(error.message, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -229,4 +222,4 @@ const Education = () => {
     </div>
   );
 };
-export default Education
+export default Education;

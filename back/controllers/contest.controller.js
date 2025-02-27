@@ -1,5 +1,5 @@
 import { Contest, Clan } from "../data/mongodb.js";
-import mongoose from "mongoose"; 
+import mongoose from "mongoose";
 // Controller function to create a new match
 export const createContest = async (req, res) => {
   try {
@@ -85,7 +85,7 @@ export const updateContest = async (req, res) => {
 
     const contest = await Contest.findByIdAndUpdate(
       id,
-      { $addToSet: { participents:  new mongoose.Types.ObjectId(clanId)  } }, // Add clanId to participents array (prevents duplicates)
+      { $addToSet: { participents: new mongoose.Types.ObjectId(clanId) } }, // Add clanId to participents array (prevents duplicates)
       { new: true }
     );
 
@@ -162,5 +162,48 @@ export const getContestsByAdminId = async (req, res) => {
     res.status(200).json(contests);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export const cancleContest = async (req, res) => {
+  try {
+    const { id } = req.params; // Contest ID
+    const { clanId } = req.body; // Clan ID
+
+    if (!clanId) {
+      return res.status(400).json({ message: "Clan ID is required." });
+    }
+
+    const objectClanId = new mongoose.Types.ObjectId(clanId); // Ensure ObjectId
+
+    // Remove the clanId from the contest's participents array
+    const contest = await Contest.findByIdAndUpdate(
+      id,
+      { $pull: { participents: objectClanId } }, // Ensure ObjectId is removed
+      { new: true }
+    );
+
+    if (!contest) {
+      return res.status(404).json({ message: "Contest not found." });
+    }
+
+    // Remove the contest ID from the clan's contests array
+    const clan = await Clan.findByIdAndUpdate(
+      objectClanId,
+      { $pull: { contests: contest._id } }, // Ensure ObjectId is removed
+      { new: true }
+    );
+
+    if (!clan) {
+      return res.status(404).json({ message: "Clan not found." });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Participant removed successfully!", contest });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to remove participant.", error: error.message });
   }
 };

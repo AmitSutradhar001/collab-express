@@ -69,7 +69,7 @@ const Position = ({ data }) => {
         <div className="po-img-div">
           <div className="po-img-outer-div">
             <div className="po-img">
-              <img className="w-10 h-10" src={data ? data.postImage : ""} />
+              <img className="w-16 h-16" src={data ? data.postImage : ""} />
             </div>
             <div>
               <h2 className="po-h2">

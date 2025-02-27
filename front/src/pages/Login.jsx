@@ -50,7 +50,6 @@ export const Login = () => {
           withCredentials: true, // Required to send and receive cookies
         }
       );
-      console.log(loginResponse);
       if (loginResponse.status === 200) {
         let newData = jwtDecode(loginResponse.data.collab_token);
         dispatch(login(newData.user));

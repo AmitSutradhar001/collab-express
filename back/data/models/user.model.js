@@ -38,6 +38,7 @@ const userModel = new Schema(
     comDescription: { type: String },
     instName: { type: String },
     instDegreeName: { type: String },
+    instLocation: { type: String },
     instStart: { type: Date },
     instEnd: { type: Date },
     instDescription: { type: String },

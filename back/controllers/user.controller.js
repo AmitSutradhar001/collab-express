@@ -107,3 +107,37 @@ export const getTheUser = async (req, res, next) => {
     });
   }
 };
+
+export const getUsersByIds = async (req, res) => {
+  try {
+    const { userIds } = req.body; // Expecting an array of user IDs
+
+    if (!Array.isArray(userIds) || userIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid array of user IDs",
+      });
+    }
+
+    const users = await User.find({ _id: { $in: userIds } });
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found with the provided IDs",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+

@@ -10,14 +10,13 @@ import { toast, ToastContainer } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
 import { login } from "../../redux/userSlice.js";
 
-
 const Experience = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const api = useApi();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const comName = formData.get("company_name");
@@ -36,57 +35,56 @@ const Experience = () => {
     }
     // const start_date = startDate.toISOString().slice(0, 10);
     // const end_date = endDate.toISOString().slice(0, 10);
-     try {
-          const loginResponse = await api.put(
-            "/user/update-user",
-            {
-              comName,
-              comLocation,
-              comPosition,
-              comDescription,
-              comStart: startDate,
-              comEnd: endDate,
-            },
-            {
-              headers: {
-                "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
-              },
-              withCredentials: true, // Required to send and receive cookies
-            }
-          );
-          console.log(loginResponse.data.user);
-          if (loginResponse.status === 200) {
-            dispatch(login(loginResponse.data.user));
-    
-            toast.success("Loged In Successfully!", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            setTimeout(() => {
-              navigate("/profile/education");
-            }, 1000);
-          }
-        } catch (error) {
-          console.log(error);
-    
-          toast.error(error.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+    try {
+      const loginResponse = await api.put(
+        "/user/update-user",
+        {
+          comName,
+          comLocation,
+          comPosition,
+          comDescription,
+          comStart: startDate,
+          comEnd: endDate,
+        },
+        {
+          headers: {
+            "Content-Type": import.meta.env.VITE_EXPRESS_HEADER,
+          },
+          withCredentials: true, // Required to send and receive cookies
         }
+      );
+      console.log(loginResponse.data.user);
+      if (loginResponse.status === 200) {
+        dispatch(login(loginResponse.data.user));
 
+        toast.success("Successful!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/profile/education");
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   return (

@@ -6,7 +6,10 @@ import Loading from "../components/Loading.jsx";
 import { useApi } from "../context/ApiContext.jsx";
 import CreateClan from "../components/clan/CreateClan.jsx";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ClanList = () => {
+  const [searchClan, setSearchClan] = useState("");
   const [popup, setPopup] = useState(false);
   const [clanPopup, setClanPopup] = useState(false);
   const [clanData, setClanData] = useState(null);
@@ -16,7 +19,35 @@ const ClanList = () => {
   const handlePopup = () => {
     setPopup(!popup);
   };
-  const handleSubmit = async (e) => {};
+  const handleSearch = async () => {
+    if (!searchClan.trim()) {
+      alert("Please enter a clan name");
+      return;
+    }
+    console.log(searchClan);
+
+    try {
+      const response = await api.post("/clan/search", {
+        query: searchClan,
+      });
+      if (response.status == 200) {
+        setClanData(response.data);
+      }
+      // Handle response (e.g., update state, show results, etc.)
+    } catch (error) {
+      console.error("Error searching clan:", error);
+      return toast.info("No clan with the search name!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
   const handleClanPopup = () => {
     setClanPopup(!clanPopup);
   };
@@ -43,6 +74,7 @@ const ClanList = () => {
   if (!clanData) return <Loading />;
   return (
     <>
+      <ToastContainer style={{ top: "100px" }} />
       <div className="flex justify-center items-start w-full">
         <div className="w-10/12  flex-wrap flex gap-3 justify-center items-center mt-8">
           {user?.isAdmin && (
@@ -54,7 +86,6 @@ const ClanList = () => {
               {clanPopup ? "Cancle" : "New Clan"}
             </button>
           )}
-
           <div className="flex gap-4 justify-start items-center py-1 px-2 w-6/12 border-[1px] border-gray-400 rounded-sm min-w-52">
             <svg
               width="25"
@@ -80,6 +111,8 @@ const ClanList = () => {
             </svg>
             <input
               type="text"
+              value={searchClan}
+              onChange={(e) => setSearchClan(e.target.value)}
               placeholder="Search Clans"
               className="text-start outline-none"
             />
@@ -87,6 +120,7 @@ const ClanList = () => {
           <div className="flex justify-start items-center gap-3">
             <button
               disabled={clanPopup}
+              onClick={handleSearch}
               className={
                 popup
                   ? " px-5 w-24 py-1 font-semibold bg-gray-300 rounded-md text-white"

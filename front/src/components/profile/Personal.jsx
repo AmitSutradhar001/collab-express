@@ -55,7 +55,7 @@ const Personal = () => {
       if (loginResponse.status === 200) {
         dispatch(login(loginResponse.data.user));
 
-        toast.success("Loged In Successfully!", {
+        toast.success("Successful!", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

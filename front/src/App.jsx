@@ -65,33 +65,56 @@ function App() {
                   path="ProjectAdminRoute"
                   element={<ProjectAdminRoute />}
                 />
-                <Route path="clan/:id" element={<Clan />} />
-                <Route path="discord" element={<Discord />} />
-                <Route path="clan-list" element={<ClanList />} />
-                <Route path="warlog/:clanId" element={<WarLog />} />
-                <Route path="fund-screen/:clanId" element={<FundScreen />} />
+                <Route
+                  path="clan/:id"
+                  element={<ProtectedRoute element={<Clan />} />}
+                />
+                {/* <Route path="discord" element={<Discord />} /> */}
+                <Route
+                  path="clan-list"
+                  element={<ProtectedRoute element={<ClanList />} />}
+                />
+                <Route
+                  path="warlog/:clanId"
+                  element={<ProtectedRoute element={<WarLog />} />}
+                />
+                <Route
+                  path="fund-screen/:clanId"
+                  element={<ProtectedRoute element={<FundScreen />} />}
+                />
                 <Route
                   path="league-challenges/:clanId"
-                  element={<LeagueChallenges />}
+                  element={<ProtectedRoute element={<LeagueChallenges />} />}
                 />
                 <Route
                   path="transaction-history/:clanId"
-                  element={<Transactionhistory />}
+                  element={<ProtectedRoute element={<Transactionhistory />} />}
                 />
-                <Route path="/detail-screen/:id" element={<DetailScreen />} />
+                <Route
+                  path="/detail-screen/:id"
+                  element={<ProtectedRoute element={<DetailScreen />} />}
+                />
                 <Route
                   path="/contest_description_page/:id"
-                  element={<ContestDescriptionPage />}
+                  element={
+                    <ProtectedRoute element={<ContestDescriptionPage />} />
+                  }
                 />
-                <Route path="/contest_page" element={<ContestPage />}>
-                  <Route index element={<PostContest />} />
+                <Route
+                  path="/contest_page"
+                  element={<ProtectedRoute element={<ContestPage />} />}
+                >
+                  <Route
+                    index
+                    element={<ProtectedRoute element={<PostContest />} />}
+                  />
                   <Route
                     path="/contest_page/my_contests"
-                    element={<MyContests />}
+                    element={<ProtectedRoute element={<MyContests />} />}
                   />
                   <Route
                     path="/contest_page/all_contests"
-                    element={<AllContest />}
+                    element={<ProtectedRoute element={<AllContest />} />}
                   />
                 </Route>
 

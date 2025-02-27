@@ -26,7 +26,7 @@ const ContestRight = ({ contest, setContestData }) => {
       if (res.status == 200) {
         setContestData(res.data.contest);
         console.log(res.data);
-        
+
         return toast.success("Success!", {
           position: "top-right",
           autoClose: 5000,
@@ -40,6 +40,48 @@ const ContestRight = ({ contest, setContestData }) => {
       }
     } catch (error) {
       return toast.error("Failed!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+  const cancleRegistration = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.put(
+        `/contest/cancle/${id}`,
+        { clanId: user?.clanId }, // Make sure clanId is correctly sent
+        {
+          headers: {
+            "Content-Type": "application/json", // Fix content-type
+          },
+          withCredentials: true, // Required to send and receive cookies
+        }
+      );
+
+      if (res.status === 200) {
+        setContestData(res.data.contest);
+        console.log(res.data);
+        return toast.success("Registration canceled successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      console.error("Cancel registration error:", error);
+      return toast.error("Failed to cancel registration!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -69,22 +111,33 @@ const ContestRight = ({ contest, setContestData }) => {
         <h3 className="font-semibold">Rules And Regulations</h3>
         <p className="text-gray-600">{contest?.rules}</p>
       </div>
-      <div className="flex items-center justify-between bg-gray-100 p-4 rounded-md">
-        <p className="text-gray-500">
-          {contest?.participents?.includes(user?.clanId)
-            ? "You are already register for the contest!"
-            : "Register Now for the contest!"}
-        </p>
-        <button
-          onClick={handleClick}
-          disabled={contest?.participents?.includes(user?.clanId)}
-          className={`bg-gradient-to-r  from-purple-500 to-blue-600 text-white px-4 py-2 rounded-md ${contest?.participents?.includes(
-            user?.clanId
-          ) && "opacity-30"}`}
-        >
-          Register Now
-        </button>
-      </div>
+      {user?.isAdmin && (
+        <div className="flex items-center justify-between bg-gray-100 p-4 rounded-md">
+          {contest?.participents?.includes(user?.clanId) ? (
+            <>
+              <p className="text-gray-500">
+                You are already registered for the contest!
+              </p>
+              <button
+                onClick={cancleRegistration}
+                className="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-md"
+              >
+                Cancel Registration
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-gray-500">Register Now for the contest!</p>
+              <button
+                onClick={handleClick}
+                className="bg-gradient-to-r from-purple-500 to-blue-600 text-white px-4 py-2 rounded-md"
+              >
+                Register Now
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
